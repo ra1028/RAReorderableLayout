@@ -1,0 +1,11 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+target 'RAReorderableLayout', :exclusive => true do
+  pod "RAReorderableLayout", :path => "../"
+end
+
+target 'Tests', :exclusive => true do
+  pod "RAReorderableLayout", :path => "../"
+
+  
+end
