@@ -198,9 +198,11 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
         let atIndexPath = self.cellFakeView!.indexPath
         let toIndexPath = self.collectionView!.indexPathForItemAtPoint(self.cellFakeView!.center)
         
-        if atIndexPath == nil {
+        if atIndexPath == nil || toIndexPath == nil {
             return
-        }else if atIndexPath!.isEqual(toIndexPath) {
+        }
+        
+        if atIndexPath!.isEqual(toIndexPath) {
             return
         }
         

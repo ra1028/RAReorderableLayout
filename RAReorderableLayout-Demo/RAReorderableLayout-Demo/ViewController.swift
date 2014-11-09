@@ -16,6 +16,8 @@ class ViewController: UIViewController, RAReorderableLayoutDelegate ,RAReorderab
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "RAReorderableLayout"
+        self.statusBarGradient()
         let nib = UINib(nibName: "collectionViewCell", bundle: nil);
         self.collectionView.registerNib(nib, forCellWithReuseIdentifier: "cell")
         self.collectionView.delegate = self
@@ -26,6 +28,21 @@ class ViewController: UIViewController, RAReorderableLayoutDelegate ,RAReorderab
             let image = UIImage(named: name)
             self.images.append(image!)
         }
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
+    }
+    
+    private func statusBarGradient() {
+        var statusBarWindow = UIApplication.sharedApplication().valueForKey("statusBarWindow") as UIWindow
+        let gradLay = CAGradientLayer()
+        gradLay.frame = CGRectMake(0, 0, CGRectGetWidth(UIScreen.mainScreen().bounds), 20.0)
+        let main = UIColor(white: 0, alpha: 0.5).CGColor
+        let sub = UIColor.clearColor().CGColor
+        gradLay.colors = [main, sub]
+        gradLay.locations = [0, 1]
+        statusBarWindow.layer.insertSublayer(gradLay, atIndex: 0)
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
