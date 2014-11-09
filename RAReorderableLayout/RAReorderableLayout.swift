@@ -43,12 +43,6 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
     
     private var cellFakeView: RACellFakeView?
     
-    private var currentReorderingPath: NSIndexPath?
-    
-    private var currentCellCenter: CGPoint?
-    
-    private var cellFakeViewCenter: CGPoint?
-    
     private var panTranslation: CGPoint?
     
     required init(coder aDecoder: NSCoder) {
@@ -72,7 +66,7 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
     override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes! {
         let attribute: UICollectionViewLayoutAttributes = super.layoutAttributesForItemAtIndexPath(indexPath)
         if attribute.representedElementCategory == .Cell {
-            if attribute.indexPath.isEqual(self.currentReorderingPath) {
+            if attribute.indexPath.isEqual(self.cellFakeView?.indexPath) {
                 attribute.alpha = 0
             }
         }
@@ -85,7 +79,7 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
             for attribute in attributesArray! {
                 var attri = attribute as UICollectionViewLayoutAttributes
                 if attri.representedElementCategory == .Cell {
-                    if attri.indexPath.isEqual(self.currentReorderingPath) {
+                    if attri.indexPath.isEqual(self.cellFakeView?.indexPath) {
                         attri.alpha = 0
                     }
                 }
@@ -136,29 +130,26 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
     func handleLongPress(longPress: UILongPressGestureRecognizer!) {
         let location = longPress.locationInView(self.collectionView)
         var indexPath: NSIndexPath? = self.collectionView?.indexPathForItemAtPoint(location)
-        if let currentIndexPath = self.currentReorderingPath {
-            indexPath = currentIndexPath
+        if self.cellFakeView != nil {
+            indexPath = self.cellFakeView?.indexPath
         }
         if  indexPath != nil {
             switch longPress.state {
             case .Began:
                 //TODO: insert can move delegate
                 
-                self.currentReorderingPath = indexPath
-                
                 self.collectionView?.scrollsToTop = false
                 
                 let currentCell: UICollectionViewCell? = self.collectionView?.cellForItemAtIndexPath(indexPath!)
                 
                 self.cellFakeView = RACellFakeView(cell: currentCell!)
+                self.cellFakeView!.indexPath = indexPath
+                self.cellFakeView!.originalCenter = currentCell?.center
                 self.collectionView?.addSubview(self.cellFakeView!)
-                
-                self.currentCellCenter = currentCell?.center
-                self.cellFakeViewCenter = self.cellFakeView?.center
                 
                 self.invalidateLayout()
                 
-                self.cellFakeView?.pushFowardView()
+                self.cellFakeView!.pushFowardView()
                 
                 // TODO: insert did begin dragging delegate
             case .Cancelled:
@@ -168,22 +159,14 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
                 
                 self.collectionView?.scrollsToTop = true
                 
-                // TODO: invalid displaylink
+                self.invalidateDisplayLink()
                 
-                let attribute = self.layoutAttributesForItemAtIndexPath(self.currentReorderingPath!)
-                self.cellFakeView?.pushBackViewWithCompletion(additional: { () -> Void in
-                    self.cellFakeView?.frame = attribute.frame
-                    return
-                    }, completion: { () -> Void in
-                        self.cellFakeView?.hidden = true
-                        self.cellFakeView?.removeFromSuperview()
-                        self.cellFakeView = nil
-                        self.currentReorderingPath = nil
-                        self.currentCellCenter = nil
-                        self.cellFakeViewCenter = nil
-                        self.invalidateLayout()
+                let attribute = self.layoutAttributesForItemAtIndexPath(self.cellFakeView!.indexPath!)
+                self.cellFakeView!.pushBackView(cellFrame: attribute.frame, completion: { () -> Void in
+                    self.cellFakeView!.removeFromSuperview()
+                    self.cellFakeView = nil
+                    self.invalidateLayout()
                 })
-                
             default:
                 break
             }
@@ -196,8 +179,10 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
             switch pan.state {
             case .Changed:
                 self.panTranslation = pan.translationInView(self.collectionView!)
-                self.cellFakeView?.center.x = self.cellFakeViewCenter!.x + panTranslation!.x
-                self.cellFakeView?.center.y = self.cellFakeViewCenter!.y + panTranslation!.y
+                self.cellFakeView!.center.x = self.cellFakeView!.originalCenter!.x + panTranslation!.x
+                self.cellFakeView!.center.y = self.cellFakeView!.originalCenter!.y + panTranslation!.y
+                
+                self.moveItemIfNeeded()
             case .Cancelled:
                 fallthrough
             case .Ended:
@@ -206,6 +191,31 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
                 break
             }
         }
+    }
+    
+    // move item
+    private func moveItemIfNeeded() {
+        let atIndexPath = self.cellFakeView!.indexPath
+        let toIndexPath = self.collectionView!.indexPathForItemAtPoint(self.cellFakeView!.center)
+        
+        if atIndexPath == nil {
+            return
+        }else if atIndexPath!.isEqual(toIndexPath) {
+            return
+        }
+        
+        //TODO: insert can move to indexPath delegate
+        
+        //TODO: insert will move delegate
+        
+        let attribute = self.layoutAttributesForItemAtIndexPath(toIndexPath!)
+        self.collectionView!.performBatchUpdates({ () -> Void in
+            self.cellFakeView!.indexPath = toIndexPath
+            self.cellFakeView?.changeBoundsIfNeeded(attribute.bounds)
+            self.collectionView!.moveItemAtIndexPath(atIndexPath!, toIndexPath: toIndexPath!)
+            
+            //TODO: insert did move delegate
+        }, completion:nil)
     }
     
     // gesture recognize delegate
@@ -247,8 +257,14 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
 private class RACellFakeView: UIView {
     
     weak var cell: UICollectionViewCell?
+    
     var cellFakeImageView: UIImageView?
+    
     var cellFakeHightedView: UIImageView?
+    
+    private var indexPath: NSIndexPath?
+    
+    private var originalCenter: CGPoint?
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -282,9 +298,19 @@ private class RACellFakeView: UIView {
         self.addSubview(self.cellFakeHightedView!)
     }
     
+    func changeBoundsIfNeeded(bounds: CGRect) {
+        if CGRectEqualToRect(self.bounds, bounds) {
+            return
+        }
+        
+        UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseInOut | .BeginFromCurrentState, animations: { () -> Void in
+            self.bounds = bounds
+        }, completion: nil)
+    }
+    
     func pushFowardView() {
         UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseInOut | .BeginFromCurrentState, animations: {
-            self.center = self.cell!.center
+            self.center = self.originalCenter!
             self.transform = CGAffineTransformMakeScale(1.1, 1.1)
             var shadowAnimation = CABasicAnimation(keyPath: "shadowOpacity")
             shadowAnimation.fromValue = 0
@@ -297,18 +323,16 @@ private class RACellFakeView: UIView {
         })
     }
     
-    func pushBackViewWithCompletion(additional animation:(()->Void)?, completion: (()->Void)?) {
+    func pushBackView(cellFrame frame: CGRect!, completion: (()->Void)?) {
         UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseInOut | .BeginFromCurrentState, animations: {
             self.transform = CGAffineTransformIdentity
+            self.frame = frame
             var shadowAnimation = CABasicAnimation(keyPath: "shadowOpacity")
             shadowAnimation.fromValue = 0.5
             shadowAnimation.toValue = 0
             shadowAnimation.removedOnCompletion = false
             shadowAnimation.fillMode = kCAFillModeForwards
             self.layer.addAnimation(shadowAnimation, forKey: "removeShadow")
-            if let additionalAnimation = animation {
-                additionalAnimation()
-            }
             }, completion: { (finished) -> Void in
                 if completion != nil {
                     completion!()
@@ -317,7 +341,7 @@ private class RACellFakeView: UIView {
     }
     
     private func getCellImage() -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(self.cell!.bounds.size, true, UIScreen.mainScreen().scale * 3)
+        UIGraphicsBeginImageContextWithOptions(self.cell!.bounds.size, true, UIScreen.mainScreen().scale * 5)
         self.cell!.drawViewHierarchyInRect(self.cell!.bounds, afterScreenUpdates: true)
         let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()

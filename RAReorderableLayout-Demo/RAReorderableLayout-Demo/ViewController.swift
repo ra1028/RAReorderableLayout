@@ -58,14 +58,12 @@ class ViewController: UIViewController, RAReorderableLayoutDelegate ,RAReorderab
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = self.collectionView.dequeueReusableCellWithReuseIdentifier("cellID", forIndexPath: indexPath) as RACollectionViewCell
-        cell.numLabel.text = toString(indexPath.item + 1)
         cell.imageView.image = self.images[indexPath.item]
         return cell
     }
 }
 
 class RACollectionViewCell: UICollectionViewCell {
-    var numLabel: UILabel!
     var imageView: UIImageView!
     var gradientLayer: CAGradientLayer?
     
@@ -82,8 +80,7 @@ class RACollectionViewCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         self.imageView.frame = self.bounds
-        self.numLabel.frame = CGRectMake(0, CGRectGetHeight(self.bounds) - 20.0, CGRectGetWidth(self.bounds), 20.0)
-        self.applyGradation(self.numLabel)
+        self.applyGradation(self.imageView)
     }
     
     private func configure() {
@@ -91,13 +88,6 @@ class RACollectionViewCell: UICollectionViewCell {
         self.imageView.autoresizingMask = .FlexibleWidth | .FlexibleHeight
         self.imageView.contentMode = UIViewContentMode.ScaleAspectFill
         self.addSubview(self.imageView)
-        
-        self.numLabel = UILabel()
-        self.numLabel.autoresizingMask = .FlexibleWidth | .FlexibleHeight
-        self.numLabel.textAlignment = .Center
-        self.numLabel.font = UIFont.boldSystemFontOfSize(20.0)
-        self.numLabel.textColor = UIColor.whiteColor()
-        self.addSubview(self.numLabel)
     }
     
     private func applyGradation(gradientView: UIView!) {
@@ -105,14 +95,14 @@ class RACollectionViewCell: UICollectionViewCell {
         self.gradientLayer = nil
         
         self.gradientLayer = CAGradientLayer()
-        self.gradientLayer!.frame = gradientView.frame
+        self.gradientLayer!.frame = gradientView.bounds
         
-        let mainColor = UIColor(white: 0, alpha: 0.7).CGColor
+        let mainColor = UIColor(white: 0, alpha: 0.4).CGColor
         let subColor = UIColor.clearColor().CGColor
         self.gradientLayer!.colors = [subColor, mainColor]
         self.gradientLayer!.locations = [0, 1]
         
-        self.layer.insertSublayer(self.gradientLayer, below: gradientView.layer)
+        gradientView.layer.addSublayer(self.gradientLayer)
     }
 }
 
