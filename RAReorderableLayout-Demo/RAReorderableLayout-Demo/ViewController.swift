@@ -49,11 +49,10 @@ class ViewController: UIViewController, RAReorderableLayoutDelegate ,RAReorderab
         let screenWidth = CGRectGetWidth(UIScreen.mainScreen().bounds)
         let threePiecesWidth = screenWidth / 3.0
         let twoPiecesWidth = screenWidth / 2.0
-        let fiveItems = indexPath.item % 5
-        if fiveItems == 0 || fiveItems == 1 {
-            return CGSizeMake(twoPiecesWidth, twoPiecesWidth)
-        }else {
+        if indexPath.item < 21 {
             return CGSizeMake(threePiecesWidth, threePiecesWidth)
+        }else {
+            return CGSizeMake(twoPiecesWidth, twoPiecesWidth)
         }
     }
     
