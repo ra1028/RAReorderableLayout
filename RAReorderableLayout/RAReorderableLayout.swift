@@ -21,7 +21,7 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
     
     private enum direction {
         case toTop
-        case toBottom
+        case toEnd
         case stay
         
         private func scrollValue(percentage: CGFloat) -> CGFloat {
@@ -29,7 +29,7 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
             switch self {
             case toTop:
                 value = -10.0
-            case toBottom:
+            case toEnd:
                 value = 10.0
             case .stay:
                 return 0
@@ -187,7 +187,7 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
         
         if self.continuousScrollDirection == .toTop {
             return 1.0 - (cellMid - offset) / (self.trigerInset! - offset)
-        }else if self.continuousScrollDirection == .toBottom {
+        }else if self.continuousScrollDirection == .toEnd {
             let bottomTriger: CGFloat = bottom - self.trigerInset!
             return (cellMid - self.trigerInset!) / (bottom - self.trigerInset!)
         }else {
@@ -298,7 +298,7 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
             self.trigerInset = trigerInsetTop
             self.setUpDisplayLink()
         }else if cellMid >= trigerInsetBottom {
-            self.continuousScrollDirection = .toBottom
+            self.continuousScrollDirection = .toEnd
             self.trigerInset = trigerInsetBottom
             self.setUpDisplayLink()
         }else {
@@ -435,6 +435,7 @@ private class RACellFakeView: UIView {
         UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseInOut | .BeginFromCurrentState, animations: {
             self.center = self.originalCenter!
             self.transform = CGAffineTransformMakeScale(1.1, 1.1)
+            self.cellFakeHightedView!.alpha = 0;
             var shadowAnimation = CABasicAnimation(keyPath: "shadowOpacity")
             shadowAnimation.fromValue = 0
             shadowAnimation.toValue = 0.7
