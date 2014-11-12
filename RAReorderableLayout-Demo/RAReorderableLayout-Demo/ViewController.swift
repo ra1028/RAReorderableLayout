@@ -82,6 +82,12 @@ class ViewController: UIViewController, RAReorderableLayoutDelegate ,RAReorderab
 class RACollectionViewCell: UICollectionViewCell {
     var imageView: UIImageView!
     var gradientLayer: CAGradientLayer?
+    var hilightedCover: UIView!
+    override var highlighted: Bool {
+        didSet {
+            self.hilightedCover.hidden = !self.highlighted
+        }
+    }
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -96,6 +102,7 @@ class RACollectionViewCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         self.imageView.frame = self.bounds
+        self.hilightedCover.frame = self.bounds
         self.applyGradation(self.imageView)
     }
     
@@ -104,6 +111,12 @@ class RACollectionViewCell: UICollectionViewCell {
         self.imageView.autoresizingMask = .FlexibleWidth | .FlexibleHeight
         self.imageView.contentMode = UIViewContentMode.ScaleAspectFill
         self.addSubview(self.imageView)
+        
+        self.hilightedCover = UIView()
+        self.hilightedCover.autoresizingMask = .FlexibleWidth | .FlexibleHeight
+        self.hilightedCover.backgroundColor = UIColor(white: 0, alpha: 0.5)
+        self.hilightedCover.hidden = true
+        self.addSubview(self.hilightedCover)
     }
     
     private func applyGradation(gradientView: UIView!) {
@@ -113,7 +126,7 @@ class RACollectionViewCell: UICollectionViewCell {
         self.gradientLayer = CAGradientLayer()
         self.gradientLayer!.frame = gradientView.bounds
         
-        let mainColor = UIColor(white: 0, alpha: 0.4).CGColor
+        let mainColor = UIColor(white: 0, alpha: 0.3).CGColor
         let subColor = UIColor.clearColor().CGColor
         self.gradientLayer!.colors = [subColor, mainColor]
         self.gradientLayer!.locations = [0, 1]
