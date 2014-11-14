@@ -94,11 +94,6 @@ class RACollectionViewCell: UICollectionViewCell {
         self.configure()
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-    }
-    
     override func layoutSubviews() {
         super.layoutSubviews()
         self.imageView.frame = self.bounds

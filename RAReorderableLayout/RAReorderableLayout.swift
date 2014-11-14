@@ -136,24 +136,14 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
         
     }
     
-    override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes! {
-        let attribute: UICollectionViewLayoutAttributes = super.layoutAttributesForItemAtIndexPath(indexPath)
-        if attribute.representedElementCategory == .Cell {
-            if attribute.indexPath.isEqual(self.cellFakeView?.indexPath) {
-                attribute.alpha = 0
-            }
-        }
-        return attribute
-    }
-    
     override func layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]? {
         var attributesArray = super.layoutAttributesForElementsInRect(rect)
         if attributesArray != nil {
             for attribute in attributesArray! {
-                var attri = attribute as UICollectionViewLayoutAttributes
-                if attri.representedElementCategory == .Cell {
-                    if attri.indexPath.isEqual(self.cellFakeView?.indexPath) {
-                        attri.alpha = 0
+                var layoutAttribute = attribute as UICollectionViewLayoutAttributes
+                if layoutAttribute.representedElementCategory == .Cell {
+                    if layoutAttribute.indexPath.isEqual(self.cellFakeView?.indexPath) {
+                        layoutAttribute.alpha = 0
                     }
                 }
             }
