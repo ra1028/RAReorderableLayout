@@ -9,12 +9,24 @@
 import UIKit
 
 @objc protocol RAReorderableLayoutDelegate: UICollectionViewDelegateFlowLayout {
+    optional func collectionView(collectionView: UICollectionView, atIndexPath: NSIndexPath, willMoveToIndexPath toIndexPath: NSIndexPath)
+    optional func collectionView(collectionView: UICollectionView, atIndexPat: NSIndexPath, didMoveToIndexPath toIndesPath: NSIndexPath)
     
+    optional func collectionView(collectionView: UICollectionView, allowMoveAtIndexPath indexPath: NSIndexPath) -> Bool
+    optional func collectionView(collectionView: UICollectionView, atIndexPath: NSIndexPath, canMoveToIndexPath: NSIndexPath) -> Bool
+    
+    optional func collectionView(collectionView: UICollectionView, collectionViewLayout layout: RAReorderableLayout, willBeginDraggingItemAtIndexPath indexPath: NSIndexPath)
+    optional func collectionView(collectionView: UICollectionView, collectionViewLayout layout: RAReorderableLayout, didBeginDraggingItemAtIndexPath indexPath: NSIndexPath)
+    optional func collectionView(collectionView: UICollectionView, collectionViewLayout layout: RAReorderableLayout, willEndDraggingItemToIndexPath indexPath: NSIndexPath)
+    optional func collectionView(collectionView: UICollectionView, collectionViewLayout layout: RAReorderableLayout, didEndDraggingItemToIndexPath indexPath: NSIndexPath)
 }
 
 @objc protocol RAReorderableLayoutDataSource: UICollectionViewDataSource {
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
+    
+    optional func collectionView(collectionView: UICollectionView, reorderingItemAlphaInSection section: Int) -> CGFloat
+    optional func collectionView(scrollTrigerEdgeInsetsInCollectionView trigerInsets: UICollectionView) -> UIEdgeInsets
 }
 
 class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelegate {
@@ -42,21 +54,21 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
         }
     }
 
-    var delegate: RAReorderableLayoutDelegate! {
+    weak var delegate: RAReorderableLayoutDelegate? {
         set {
             self.collectionView?.delegate = delegate
         }
         get {
-            return self.collectionView?.delegate as RAReorderableLayoutDelegate
+            return self.collectionView?.delegate as? RAReorderableLayoutDelegate
         }
     }
     
-    var datasource: RAReorderableLayoutDataSource! {
+    weak var datasource: RAReorderableLayoutDataSource? {
         set {
             self.collectionView?.delegate = delegate
         }
         get {
-            return self.collectionView?.dataSource as RAReorderableLayoutDataSource
+            return self.collectionView?.dataSource as? RAReorderableLayoutDataSource
         }
     }
     
@@ -74,7 +86,7 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
     
     private var fakeCellCenter: CGPoint?
     
-    private var trigerInsetLength: CGFloat = 150.0
+    private var trigerInsets: UIEdgeInsets = UIEdgeInsetsMake(150.0, 150.0, 150.0, 150.0)
     
     private var insetTop: CGFloat {
         let contentInset = self.collectionView!.contentInset
@@ -110,11 +122,19 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
     }
     
     private var trigerInsetTop: CGFloat {
-        return self.offsetFromTop + self.trigerInsetLength
+        if self.scrollDirection == .Vertical {
+            return self.offsetFromTop + self.trigerInsets.top
+        }else {
+            return self.offsetFromTop + self.trigerInsets.left
+        }
     }
     
     private var trigerInsetEnd: CGFloat {
-        return self.offsetFromTop + self.collectionViewLength - self.trigerInsetLength
+        if self.scrollDirection == .Vertical {
+            return self.offsetFromTop + self.collectionViewLength - self.trigerInsets.bottom
+        }else {
+            return self.offsetFromTop + self.collectionViewLength - self.trigerInsets.right
+        }
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -134,6 +154,9 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
     override func prepareLayout() {
         super.prepareLayout()
         
+        if let insets = self.datasource?.collectionView?(scrollTrigerEdgeInsetsInCollectionView: self.collectionView!) {
+            self.trigerInsets = insets
+        }
     }
     
     override func layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]? {
@@ -143,7 +166,13 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
                 var layoutAttribute = attribute as UICollectionViewLayoutAttributes
                 if layoutAttribute.representedElementCategory == .Cell {
                     if layoutAttribute.indexPath.isEqual(self.cellFakeView?.indexPath) {
-                        layoutAttribute.alpha = 0
+                        var cellAlpha: CGFloat = 0
+                        
+                        if let alpha = self.datasource?.collectionView?(self.collectionView!, reorderingItemAlphaInSection: layoutAttribute.indexPath.section) {
+                            cellAlpha = alpha
+                        }
+                        
+                        layoutAttribute.alpha = cellAlpha
                     }
                 }
             }
