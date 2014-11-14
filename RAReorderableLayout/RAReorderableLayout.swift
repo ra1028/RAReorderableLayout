@@ -74,7 +74,48 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
     
     private var fakeCellCenter: CGPoint?
     
-    private var trigerInset: CGFloat?
+    private var trigerInsetLength: CGFloat = 150.0
+    
+    private var insetTop: CGFloat {
+        let contentInset = self.collectionView!.contentInset
+        return self.scrollDirection == .Vertical ? contentInset.top : contentInset.left
+    }
+    
+    private var insetEnd: CGFloat {
+        let contentInset = self.collectionView!.contentInset
+        return self.scrollDirection == .Vertical ? contentInset.bottom : contentInset.right
+    }
+    
+    private var offsetFromTop: CGFloat {
+        let contentOffset = self.collectionView!.contentOffset
+        return self.scrollDirection == .Vertical ? contentOffset.y : contentOffset.x
+    }
+    
+    private var contentLength: CGFloat {
+        let contentSize = self.collectionView!.contentSize
+        return self.scrollDirection == .Vertical ? contentSize.height : contentSize.width
+    }
+    
+    private var collectionViewLength: CGFloat {
+        let collectionViewSize = self.collectionView!.bounds.size
+        return self.scrollDirection == .Vertical ? collectionViewSize.height : collectionViewSize.width
+    }
+    
+    private var fakeCellLocation: CGFloat? {
+        if let fakeCell = self.cellFakeView {
+            return self.scrollDirection == .Vertical ? fakeCell.center.y : fakeCell.center.x
+        }else {
+            return nil
+        }
+    }
+    
+    private var trigerInsetTop: CGFloat {
+        return self.offsetFromTop + self.trigerInsetLength
+    }
+    
+    private var trigerInsetEnd: CGFloat {
+        return self.offsetFromTop + self.collectionViewLength - self.trigerInsetLength
+    }
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -92,6 +133,7 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
     
     override func prepareLayout() {
         super.prepareLayout()
+        
     }
     
     override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes! {
@@ -142,13 +184,11 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
     
     private func invalidateDisplayLink() {
         self.continuousScrollDirection = .stay
-        self.trigerInset = nil
         self.displayLink?.invalidate()
         self.displayLink = nil
     }
     
     func continuousScroll() {
-        
         if self.cellFakeView == nil {
             return
         }
@@ -156,40 +196,48 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
         let percentage: CGFloat = self.calcTrigerPercentage()
         var scrollRate: CGFloat = self.continuousScrollDirection.scrollValue(percentage)
         
-        let inset: UIEdgeInsets = self.collectionView!.contentInset
-        let offset: CGPoint = self.collectionView!.contentOffset
-        let contentSize: CGSize = self.collectionView!.contentSize
-        let size: CGSize = self.collectionView!.bounds.size
+        let insetTop: CGFloat = self.insetTop
+        let insetEnd: CGFloat = self.insetEnd
+        let offset: CGFloat = self.offsetFromTop
+        let length: CGFloat = self.contentLength
+        let size: CGFloat = self.collectionViewLength
         
-        if offset.y + scrollRate <= -inset.top {
-            scrollRate = -inset.top - offset.y
-        }else if offset.y + scrollRate >= (contentSize.height - size.height - inset.bottom) {
-            scrollRate = contentSize.height - size.height - inset.bottom - offset.y
+        if offset + scrollRate <= -insetTop {
+            scrollRate = -insetTop - offsetFromTop
+        }else if offsetFromTop + scrollRate >= contentLength - collectionViewLength - insetEnd {
+            scrollRate = contentLength - collectionViewLength - insetEnd - offsetFromTop
         }
         
         self.collectionView!.performBatchUpdates({ () -> Void in
-            self.fakeCellCenter?.y += scrollRate
-            self.cellFakeView?.center.y = self.fakeCellCenter!.y + self.panTranslation!.y
-            self.collectionView?.contentOffset.y += scrollRate
+            if self.scrollDirection == .Vertical {
+                self.fakeCellCenter?.y += scrollRate
+                self.cellFakeView?.center.y = self.fakeCellCenter!.y + self.panTranslation!.y
+                self.collectionView?.contentOffset.y += scrollRate
+            }else {
+                self.fakeCellCenter?.x += scrollRate
+                self.cellFakeView?.center.x = self.fakeCellCenter!.x + self.panTranslation!.x
+                self.collectionView?.contentOffset.x += scrollRate
+            }
             }, completion: nil)
         
         self.moveItemIfNeeded()
     }
     
     private func calcTrigerPercentage() -> CGFloat {
-        if self.trigerInset == nil {
+        if self.cellFakeView == nil {
             return 0
         }
         
-        let cellMid: CGFloat = CGRectGetMidY(self.cellFakeView!.frame)
-        let offset: CGFloat = self.collectionView!.contentOffset.y
-        let bottom: CGFloat = offset + CGRectGetHeight(self.collectionView!.bounds)
+        let fakeCellLocation: CGFloat = self.fakeCellLocation!
+        let offset: CGFloat = self.offsetFromTop
+        let offsetEnd: CGFloat = self.offsetFromTop + self.collectionViewLength
+        let trigerInsetTop = self.trigerInsetTop
+        let trigerInsetEnd = self.trigerInsetEnd
         
         if self.continuousScrollDirection == .toTop {
-            return 1.0 - (cellMid - offset) / (self.trigerInset! - offset)
+            return 1.0 - (fakeCellLocation - offset) / (trigerInsetTop - offset)
         }else if self.continuousScrollDirection == .toEnd {
-            let bottomTriger: CGFloat = bottom - self.trigerInset!
-            return (cellMid - self.trigerInset!) / (bottom - self.trigerInset!)
+            return (fakeCellLocation - trigerInsetEnd) / (offsetEnd - trigerInsetEnd)
         }else {
             return 0
         }
@@ -287,19 +335,20 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
     
     // begein scroll
     private func beginScrollIfNeeded() {
-        let top = self.collectionView!.contentOffset.y
-        let bottom = top + CGRectGetHeight(self.collectionView!.bounds)
-        let trigerInsetTop = top + 200.0
-        let trigerInsetBottom = bottom - 200.0
-        let cellMid = CGRectGetMidY(self.cellFakeView!.frame)
+        if self.cellFakeView == nil {
+            return
+        }
         
-        if  cellMid <= trigerInsetTop {
+        // TODO: get inset by delegate
+        let trigerInsetTop = self.trigerInsetTop
+        let trigerInsetEnd = self.trigerInsetEnd
+        let fakeCellLocation = self.fakeCellLocation
+        
+        if  fakeCellLocation <= trigerInsetTop {
             self.continuousScrollDirection = .toTop
-            self.trigerInset = trigerInsetTop
             self.setUpDisplayLink()
-        }else if cellMid >= trigerInsetBottom {
+        }else if fakeCellLocation >= trigerInsetEnd {
             self.continuousScrollDirection = .toEnd
-            self.trigerInset = trigerInsetBottom
             self.setUpDisplayLink()
         }else {
             self.invalidateDisplayLink()
@@ -308,7 +357,6 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
     
     // move item
     private func moveItemIfNeeded() {
-        
         var atIndexPath: NSIndexPath?
         var toIndexPath: NSIndexPath?
         if let fakeCell = self.cellFakeView {
