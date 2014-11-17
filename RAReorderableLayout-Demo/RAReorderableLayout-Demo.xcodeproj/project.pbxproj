@@ -7,12 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A972DBE1A195D940084B0D5 /* VerticalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A972DBD1A195D930084B0D5 /* VerticalViewController.swift */; };
+		2A972DC01A195F0C0084B0D5 /* HorizontalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A972DBF1A195F0C0084B0D5 /* HorizontalViewController.swift */; };
+		2A972DC21A1961BF0084B0D5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A972DC11A1961BF0084B0D5 /* Main.storyboard */; };
 		2AF54EDC1A002CD1007A7144 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF54EDB1A002CD1007A7144 /* AppDelegate.swift */; };
 		2AF54EDF1A002CD1007A7144 /* RAReorderableLayout_Demo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2AF54EDD1A002CD1007A7144 /* RAReorderableLayout_Demo.xcdatamodeld */; };
 		2AF54EE11A002CD1007A7144 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF54EE01A002CD1007A7144 /* ViewController.swift */; };
-		2AF54EE41A002CD1007A7144 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AF54EE21A002CD1007A7144 /* Main.storyboard */; };
 		2AF54EE61A002CD1007A7144 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2AF54EE51A002CD1007A7144 /* Images.xcassets */; };
-		2AF54EE91A002CD1007A7144 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2AF54EE71A002CD1007A7144 /* LaunchScreen.xib */; };
 		2AF54EF51A002CD1007A7144 /* RAReorderableLayout_DemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF54EF41A002CD1007A7144 /* RAReorderableLayout_DemoTests.swift */; };
 		2AF54F031A002D2B007A7144 /* RAReorderableLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF54F021A002D2B007A7144 /* RAReorderableLayout.swift */; };
 /* End PBXBuildFile section */
@@ -28,12 +29,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2A972DBD1A195D930084B0D5 /* VerticalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerticalViewController.swift; sourceTree = "<group>"; };
+		2A972DBF1A195F0C0084B0D5 /* HorizontalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HorizontalViewController.swift; sourceTree = "<group>"; };
+		2A972DC11A1961BF0084B0D5 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		2AF54ED61A002CD1007A7144 /* RAReorderableLayout-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RAReorderableLayout-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AF54EDA1A002CD1007A7144 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2AF54EDB1A002CD1007A7144 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2AF54EDE1A002CD1007A7144 /* RAReorderableLayout_Demo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RAReorderableLayout_Demo.xcdatamodel; sourceTree = "<group>"; };
 		2AF54EE01A002CD1007A7144 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		2AF54EE31A002CD1007A7144 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2AF54EE51A002CD1007A7144 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2AF54EE81A002CD1007A7144 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		2AF54EEE1A002CD1007A7144 /* RAReorderableLayout-DemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RAReorderableLayout-DemoTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -84,7 +87,9 @@
 			children = (
 				2AF54EDB1A002CD1007A7144 /* AppDelegate.swift */,
 				2AF54EE01A002CD1007A7144 /* ViewController.swift */,
-				2AF54EE21A002CD1007A7144 /* Main.storyboard */,
+				2A972DBD1A195D930084B0D5 /* VerticalViewController.swift */,
+				2A972DBF1A195F0C0084B0D5 /* HorizontalViewController.swift */,
+				2A972DC11A1961BF0084B0D5 /* Main.storyboard */,
 				2AF54EE51A002CD1007A7144 /* Images.xcassets */,
 				2AF54EE71A002CD1007A7144 /* LaunchScreen.xib */,
 				2AF54EDD1A002CD1007A7144 /* RAReorderableLayout_Demo.xcdatamodeld */,
@@ -207,9 +212,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2AF54EE41A002CD1007A7144 /* Main.storyboard in Resources */,
-				2AF54EE91A002CD1007A7144 /* LaunchScreen.xib in Resources */,
 				2AF54EE61A002CD1007A7144 /* Images.xcassets in Resources */,
+				2A972DC21A1961BF0084B0D5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,8 +232,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				2AF54F031A002D2B007A7144 /* RAReorderableLayout.swift in Sources */,
+				2A972DBE1A195D940084B0D5 /* VerticalViewController.swift in Sources */,
 				2AF54EE11A002CD1007A7144 /* ViewController.swift in Sources */,
 				2AF54EDC1A002CD1007A7144 /* AppDelegate.swift in Sources */,
+				2A972DC01A195F0C0084B0D5 /* HorizontalViewController.swift in Sources */,
 				2AF54EDF1A002CD1007A7144 /* RAReorderableLayout_Demo.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -253,14 +259,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		2AF54EE21A002CD1007A7144 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2AF54EE31A002CD1007A7144 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		2AF54EE71A002CD1007A7144 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -354,9 +352,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "RAReorderableLayout-Demo/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -366,9 +372,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "RAReorderableLayout-Demo/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
