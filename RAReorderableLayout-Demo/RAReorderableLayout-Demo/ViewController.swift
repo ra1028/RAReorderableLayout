@@ -9,9 +9,9 @@
 import UIKit
 
 class ViewController: UIViewController {
-    @IBOutlet weak var verticalButton: UIButton!
+    @IBOutlet weak var verticalButton: RAButton!
 
-    @IBOutlet weak var horizontalButton: UIButton!
+    @IBOutlet weak var horizontalButton: RAButton!
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -42,5 +42,35 @@ class ViewController: UIViewController {
         
         self.verticalButton.backgroundColor = color1
         self.horizontalButton.backgroundColor = color2
+    }
+}
+
+class RAButton: UIButton {
+    var baseView: UIView!
+    override var highlighted: Bool {
+        didSet {
+            let transform: CGAffineTransform = highlighted ?
+                CGAffineTransformMakeScale(1.1, 1.1) : CGAffineTransformIdentity
+            UIView.animateWithDuration(0.05, delay: 0, options: .BeginFromCurrentState, animations: { () -> Void in
+                self.transform = transform
+            }, completion: nil)
+        }
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.configure()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.layer.cornerRadius = CGRectGetWidth(self.bounds) / 2;
+    }
+    
+    private func configure() {
+        self.baseView = UIView(frame: self.bounds)
+        self.layer.cornerRadius = CGRectGetWidth(self.bounds)
+        self.baseView.addSubview(self)
+        self.setTranslatesAutoresizingMaskIntoConstraints(false)
     }
 }

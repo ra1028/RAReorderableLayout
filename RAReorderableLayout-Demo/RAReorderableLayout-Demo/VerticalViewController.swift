@@ -44,8 +44,8 @@ class VerticalViewController: UIViewController, RAReorderableLayoutDelegate, RAR
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         let screenWidth = CGRectGetWidth(UIScreen.mainScreen().bounds)
-        let threePiecesWidth = screenWidth / 3.0
-        let twoPiecesWidth = screenWidth / 2.0
+        let threePiecesWidth = screenWidth / 3.0 - ((2.0 / 3) * 2)
+        let twoPiecesWidth = screenWidth / 2.0 - (2.0 / 2)
         if indexPath.section == 0 {
             return CGSizeMake(threePiecesWidth, threePiecesWidth)
         }else {
@@ -54,15 +54,19 @@ class VerticalViewController: UIViewController, RAReorderableLayoutDelegate, RAR
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
-        return 0
+        return 2.0
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
-        return 0
+        return 2.0
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 2
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return UIEdgeInsetsMake(0, 0, 2.0, 0)
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
