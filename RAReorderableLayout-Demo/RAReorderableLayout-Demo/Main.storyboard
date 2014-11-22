@@ -137,7 +137,7 @@
         <!--Horizontal View Controller-->
         <scene sceneID="ZUX-5l-35Z">
             <objects>
-                <viewController id="u5S-9N-Dnu" customClass="HorizontalViewController" customModule="RAReorderableLayout_Demo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="u5S-9N-Dnu" customClass="HorizontalViewController" customModule="RAReorderableLayout_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="FEu-9S-TkY"/>
                         <viewControllerLayoutGuide type="bottom" id="DBE-zl-vMF"/>
@@ -233,7 +233,7 @@
         <!--Vertical View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" userLabel="Vertical View Controller" customClass="VerticalViewController" customModule="RAReorderableLayout_Demo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="vXZ-lx-hvc" userLabel="Vertical View Controller" customClass="VerticalViewController" customModule="RAReorderableLayout_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>

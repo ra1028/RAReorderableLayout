@@ -28,6 +28,10 @@ class HorizontalViewController: UIViewController, RAReorderableLayoutDelegate, R
         self.applyGradation()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.collectionView.contentInset = UIEdgeInsetsMake(self.topLayoutGuide.length, 0, 0, 0)
