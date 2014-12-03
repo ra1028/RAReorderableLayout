@@ -107,6 +107,10 @@ class VerticalViewController: UIViewController, RAReorderableLayoutDelegate, RAR
         }
     }
     
+    func scrollTrigerEdgeInsetsInCollectionView(collectionView: UICollectionView) -> UIEdgeInsets {
+        return UIEdgeInsetsMake(100.0, 100.0, 100.0, 100.0)
+    }
+    
     func collectionView(collectionView: UICollectionView, reorderingItemAlphaInSection section: Int) -> CGFloat {
         if section == 0 {
             return 0
@@ -115,11 +119,7 @@ class VerticalViewController: UIViewController, RAReorderableLayoutDelegate, RAR
         }
     }
     
-    func collectionView(scrollTrigerEdgeInsetsInCollectionView collectionView: UICollectionView) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(100.0, 100.0, 100.0, 100.0)
-    }
-    
-    func collectionView(scrollTrigerPaddingInCollectionView collectionView: UICollectionView) -> UIEdgeInsets {
+    func scrollTrigerPaddingInCollectionView(collectionView: UICollectionView) -> UIEdgeInsets {
         return UIEdgeInsetsMake(self.collectionView.contentInset.top, 0, self.collectionView.contentInset.bottom, 0)
     }
 }
