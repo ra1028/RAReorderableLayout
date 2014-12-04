@@ -14,16 +14,11 @@ RAReorderableLayout
 
 
 ## Installation
+Simply copy RAReorderableLayout.swift into your project.
+Cocoapods has not yet supported swift :(
 
-RAReorderableLayout is available through [CocoaPods](http://cocoapods.org). To install
-it, simply add the following line to your Podfile:
-
-    pod "RAReorderableLayout"
-
-Otherwise, include all files in RAReorderableLayout/ into your project.
 
 ## Usage
-
 Setup your collection view to use RAReorderableLayout.
 You must reorder cells information array in RAReorderableLayoutDelegate protocol to support reordering capability.
 Specifically, please refer to Demo-project.
