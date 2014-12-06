@@ -89,6 +89,9 @@ class VerticalViewController: UIViewController, RAReorderableLayoutDelegate, RAR
     }
     
     func collectionView(collectionView: UICollectionView, allowMoveAtIndexPath indexPath: NSIndexPath) -> Bool {
+        if collectionView.numberOfItemsInSection(indexPath.section) <= 1 {
+            return false
+        }
         return true
     }
     
@@ -106,6 +109,8 @@ class VerticalViewController: UIViewController, RAReorderableLayoutDelegate, RAR
             self.imagesForSection1.insert(photo, atIndex: toIndexPath.item)
         }
     }
+    
+
     
     func scrollTrigerEdgeInsetsInCollectionView(collectionView: UICollectionView) -> UIEdgeInsets {
         return UIEdgeInsetsMake(100.0, 100.0, 100.0, 100.0)

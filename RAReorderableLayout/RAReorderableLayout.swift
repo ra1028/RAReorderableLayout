@@ -399,62 +399,59 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
             indexPath = self.cellFakeView!.indexPath
         }
         
-        if  indexPath != nil {
-            switch longPress.state {
-            case .Began:
-                
-                // allow move item
-                if let allowMove = self.delegate?.collectionView?(self.collectionView!, allowMoveAtIndexPath: indexPath!) {
-                    if !allowMove {
-                        return
-                    }
-                }
-                
-                // will begin drag item
-                self.delegate?.collectionView?(self.collectionView!, collectionViewLayout: self, willBeginDraggingItemAtIndexPath: indexPath!)
-                
-                self.collectionView?.scrollsToTop = false
-                
-                let currentCell: UICollectionViewCell? = self.collectionView?.cellForItemAtIndexPath(indexPath!)
-                
-                self.cellFakeView = RACellFakeView(cell: currentCell!)
-                self.cellFakeView!.indexPath = indexPath
-                self.cellFakeView!.originalCenter = currentCell?.center
-                self.cellFakeView!.cellFrame = self.layoutAttributesForItemAtIndexPath(indexPath!).frame
-                self.collectionView?.addSubview(self.cellFakeView!)
-                
-                self.fakeCellCenter = self.cellFakeView!.center
-                
-                self.invalidateLayout()
-                
-                self.cellFakeView!.pushFowardView()
-                
-                // did begin drag item
-                self.delegate?.collectionView?(self.collectionView!, collectionViewLayout: self, didEndDraggingItemToIndexPath: indexPath!)
-            case .Cancelled:
-                fallthrough
-            case .Ended:
-                
-                // will end drag item
-                self.delegate?.collectionView?(self.collectionView!, collectionViewLayout: self, willEndDraggingItemToIndexPath: indexPath!)
-                
-                self.collectionView?.scrollsToTop = true
-                
-                self.fakeCellCenter = nil
-                
-                self.invalidateDisplayLink()
-                
-                self.cellFakeView!.pushBackView({ () -> Void in
-                    self.cellFakeView!.removeFromSuperview()
-                    self.cellFakeView = nil
-                    self.invalidateLayout()
-                    
-                    // did end drag item
-                    self.delegate?.collectionView?(self.collectionView!, collectionViewLayout: self, didEndDraggingItemToIndexPath: indexPath!)
-                })
-            default:
+        if indexPath == nil {
+            return
+        }
+        
+        switch longPress.state {
+        case .Began:
+            // will begin drag item
+            self.delegate?.collectionView?(self.collectionView!, collectionViewLayout: self, willBeginDraggingItemAtIndexPath: indexPath!)
+            
+            self.collectionView?.scrollsToTop = false
+            
+            let currentCell: UICollectionViewCell? = self.collectionView?.cellForItemAtIndexPath(indexPath!)
+            
+            self.cellFakeView = RACellFakeView(cell: currentCell!)
+            self.cellFakeView!.indexPath = indexPath
+            self.cellFakeView!.originalCenter = currentCell?.center
+            self.cellFakeView!.cellFrame = self.layoutAttributesForItemAtIndexPath(indexPath!).frame
+            self.collectionView?.addSubview(self.cellFakeView!)
+            
+            self.fakeCellCenter = self.cellFakeView!.center
+            
+            self.invalidateLayout()
+            
+            self.cellFakeView!.pushFowardView()
+            
+            // did begin drag item
+            self.delegate?.collectionView?(self.collectionView!, collectionViewLayout: self, didEndDraggingItemToIndexPath: indexPath!)
+        case .Cancelled:
+            fallthrough
+        case .Ended:
+            if self.cellFakeView == nil {
                 break
             }
+            
+            // will end drag item
+            self.delegate?.collectionView?(self.collectionView!, collectionViewLayout: self, willEndDraggingItemToIndexPath: indexPath!)
+            
+            self.collectionView?.scrollsToTop = true
+            
+            self.fakeCellCenter = nil
+            
+            self.invalidateDisplayLink()
+            
+            self.cellFakeView!.pushBackView({ () -> Void in
+                self.cellFakeView!.removeFromSuperview()
+                self.cellFakeView = nil
+                self.invalidateLayout()
+                
+                // did end drag item
+                self.delegate?.collectionView?(self.collectionView!, collectionViewLayout: self, didEndDraggingItemToIndexPath: indexPath!)
+            })
+        default:
+            break
         }
     }
     
@@ -481,6 +478,14 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
     
     // gesture recognize delegate
     func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        // allow move item
+        let location = gestureRecognizer.locationInView(self.collectionView)
+        if let indexPath = self.collectionView?.indexPathForItemAtPoint(location) {
+            if self.delegate?.collectionView?(self.collectionView!, allowMoveAtIndexPath: indexPath) == false {
+                return false
+            }
+        }
+        
         if gestureRecognizer.isEqual(self.longPress) {
             if (self.collectionView!.panGestureRecognizer.state != .Possible && self.collectionView!.panGestureRecognizer.state != .Failed) {
                 return false
