@@ -296,7 +296,9 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
             self.cellFakeView!.indexPath = toIndexPath
             self.cellFakeView!.cellFrame = attribute.frame
             self.cellFakeView!.changeBoundsIfNeeded(attribute.bounds)
-            self.collectionView!.moveItemAtIndexPath(atIndexPath!, toIndexPath: toIndexPath!)
+            
+            self.collectionView!.deleteItemsAtIndexPaths([atIndexPath!])
+            self.collectionView!.insertItemsAtIndexPaths([toIndexPath!])
             
             // did move item
             self.delegate?.collectionView?(self.collectionView!, atIndexPath: atIndexPath!, didMoveToIndexPath: toIndexPath!)
