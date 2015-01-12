@@ -31,7 +31,6 @@ import UIKit
     optional func scrollSpeedValueInCollectionView(collectionView: UICollectionView) -> CGFloat
 }
 
-
 class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelegate {
     
     private enum direction {
@@ -322,6 +321,10 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
         let insetEnd: CGFloat = self.insetsEnd
         let length: CGFloat = self.collectionViewLength
         let contentLength: CGFloat = self.contentLength
+        
+        if contentLength <= length {
+            return
+        }
         
         if offset + scrollRate <= -insetTop {
             scrollRate = -insetTop - offset
