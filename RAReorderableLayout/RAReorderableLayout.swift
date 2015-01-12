@@ -286,10 +286,14 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
         }
         
         // can move item
-        self.delegate?.collectionView?(self.collectionView!, atIndexPath: atIndexPath!, canMoveToIndexPath: toIndexPath!)
+        if let canMove = self.delegate?.collectionView?(self.collectionView!, atIndexPath: atIndexPath!, canMoveToIndexPath: toIndexPath!) {
+            if !canMove {
+                return
+            }
+        }
         
         // will move item
-        self.delegate?.collectionView?(self.collectionView!, atIndexPath: atIndexPath!, canMoveToIndexPath: toIndexPath!)
+        self.delegate?.collectionView?(self.collectionView!, atIndexPath: atIndexPath!, willMoveToIndexPath: toIndexPath!)
         
         let attribute = self.layoutAttributesForItemAtIndexPath(toIndexPath!)
         self.collectionView!.performBatchUpdates({ () -> Void in

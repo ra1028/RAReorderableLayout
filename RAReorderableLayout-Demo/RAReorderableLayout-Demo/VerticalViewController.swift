@@ -110,8 +110,6 @@ class VerticalViewController: UIViewController, RAReorderableLayoutDelegate, RAR
         }
     }
     
-
-    
     func scrollTrigerEdgeInsetsInCollectionView(collectionView: UICollectionView) -> UIEdgeInsets {
         return UIEdgeInsetsMake(100.0, 100.0, 100.0, 100.0)
     }
