@@ -44,8 +44,8 @@ class VerticalViewController: UIViewController, RAReorderableLayoutDelegate, RAR
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         let screenWidth = CGRectGetWidth(UIScreen.mainScreen().bounds)
-        let threePiecesWidth = screenWidth / 3.0 - ((2.0 / 3) * 2)
-        let twoPiecesWidth = screenWidth / 2.0 - (2.0 / 2)
+        let threePiecesWidth = floor(screenWidth / 3.0 - ((2.0 / 3) * 2))
+        let twoPiecesWidth = floor(screenWidth / 2.0 - (2.0 / 2))
         if indexPath.section == 0 {
             return CGSizeMake(threePiecesWidth, threePiecesWidth)
         }else {
