@@ -1,7 +1,7 @@
 RAReorderableLayout
 =======================
 
-#### A UICollectionView layout whitch can move item with drag and drop.
+#### A UICollectionView layout which you can move items with drag and drop.
 
 
 ## Screen shots
