@@ -434,7 +434,7 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
             self.cellFakeView!.pushFowardView()
             
             // did begin drag item
-            self.delegate?.collectionView?(self.collectionView!, collectionViewLayout: self, didEndDraggingItemToIndexPath: indexPath!)
+            self.delegate?.collectionView?(self.collectionView!, collectionViewLayout: self, didBeginDraggingItemAtIndexPath: indexPath!)
         case .Cancelled:
             fallthrough
         case .Ended:
