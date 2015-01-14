@@ -322,7 +322,7 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
         let length: CGFloat = self.collectionViewLength
         let contentLength: CGFloat = self.contentLength
         
-        if contentLength <= length {
+        if contentLength + insetTop + insetEnd <= length {
             return
         }
         
