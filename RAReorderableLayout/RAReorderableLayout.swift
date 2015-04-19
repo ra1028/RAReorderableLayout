@@ -194,7 +194,7 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
         var attributesArray = super.layoutAttributesForElementsInRect(rect)
         if attributesArray != nil {
             for attribute in attributesArray! {
-                var layoutAttribute = attribute as UICollectionViewLayoutAttributes
+                var layoutAttribute = attribute as! UICollectionViewLayoutAttributes
                 if layoutAttribute.representedElementCategory == .Cell {
                     if layoutAttribute.indexPath.isEqual(self.cellFakeView?.indexPath) {
                         var cellAlpha: CGFloat = 0

@@ -25,7 +25,7 @@ class HorizontalViewController: UIViewController, RAReorderableLayoutDelegate, R
         self.collectionView.registerClass(BookCell.self, forCellWithReuseIdentifier: "horizontalCell")
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
-        (self.collectionView.collectionViewLayout as RAReorderableLayout).scrollDirection = .Horizontal
+        (self.collectionView.collectionViewLayout as! RAReorderableLayout).scrollDirection = .Horizontal
         self.applyGradation()
         
         let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -79,7 +79,7 @@ class HorizontalViewController: UIViewController, RAReorderableLayoutDelegate, R
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         var cell: BookCell
-        cell = self.collectionView.dequeueReusableCellWithReuseIdentifier("horizontalCell", forIndexPath: indexPath) as BookCell
+        cell = self.collectionView.dequeueReusableCellWithReuseIdentifier("horizontalCell", forIndexPath: indexPath) as! BookCell
         cell.book = self.books[indexPath.item]
         return cell
     }

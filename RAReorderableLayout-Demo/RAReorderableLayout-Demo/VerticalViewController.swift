@@ -78,7 +78,7 @@ class VerticalViewController: UIViewController, RAReorderableLayoutDelegate, RAR
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = self.collectionView.dequeueReusableCellWithReuseIdentifier("verticalCell", forIndexPath: indexPath) as RACollectionViewCell
+        let cell = self.collectionView.dequeueReusableCellWithReuseIdentifier("verticalCell", forIndexPath: indexPath) as! RACollectionViewCell
         
         if indexPath.section == 0 {
             cell.imageView.image = self.imagesForSection0[indexPath.item]
