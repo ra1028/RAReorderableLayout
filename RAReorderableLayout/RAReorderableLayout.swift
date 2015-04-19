@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objc protocol RAReorderableLayoutDelegate: UICollectionViewDelegateFlowLayout {
+@objc public protocol RAReorderableLayoutDelegate: UICollectionViewDelegateFlowLayout {
     optional func collectionView(collectionView: UICollectionView, atIndexPath: NSIndexPath, willMoveToIndexPath toIndexPath: NSIndexPath)
     optional func collectionView(collectionView: UICollectionView, atIndexPath: NSIndexPath, didMoveToIndexPath toIndexPath: NSIndexPath)
     
@@ -21,7 +21,7 @@ import UIKit
     optional func collectionView(collectionView: UICollectionView, collectionViewLayout layout: RAReorderableLayout, didEndDraggingItemToIndexPath indexPath: NSIndexPath)
 }
 
-@objc protocol RAReorderableLayoutDataSource: UICollectionViewDataSource {
+@objc public protocol RAReorderableLayoutDataSource: UICollectionViewDataSource {
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     
@@ -31,7 +31,7 @@ import UIKit
     optional func scrollSpeedValueInCollectionView(collectionView: UICollectionView) -> CGFloat
 }
 
-class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelegate {
+public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelegate {
     
     private enum direction {
         case toTop
@@ -56,7 +56,7 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
         }
     }
 
-    weak var delegate: RAReorderableLayoutDelegate? {
+    public weak var delegate: RAReorderableLayoutDelegate? {
         set {
             self.collectionView?.delegate = delegate
         }
@@ -65,7 +65,7 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
         }
     }
     
-    weak var datasource: RAReorderableLayoutDataSource? {
+    public weak var datasource: RAReorderableLayoutDataSource? {
         set {
             self.collectionView?.delegate = delegate
         }
@@ -88,11 +88,11 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
     
     private var fakeCellCenter: CGPoint?
     
-    var trigerInsets: UIEdgeInsets = UIEdgeInsetsMake(100.0, 100.0, 100.0, 100.0)
+    public var trigerInsets: UIEdgeInsets = UIEdgeInsetsMake(100.0, 100.0, 100.0, 100.0)
     
-    var trigerPadding: UIEdgeInsets = UIEdgeInsetsZero
+    public var trigerPadding: UIEdgeInsets = UIEdgeInsetsZero
     
-    var scrollSpeedValue: CGFloat = 10.0
+    public var scrollSpeedValue: CGFloat = 10.0
     
     private var offsetFromTop: CGFloat {
         let contentOffset = self.collectionView!.contentOffset
@@ -157,7 +157,7 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
         }
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required public init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.configureObserver()
     }
@@ -171,7 +171,7 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
         self.removeObserver(self, forKeyPath: "collectionView")
     }
     
-    override func prepareLayout() {
+    override public func prepareLayout() {
         super.prepareLayout()
         
         // scroll triger insets
@@ -190,7 +190,7 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
         }
     }
     
-    override func layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]? {
+    override public func layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]? {
         var attributesArray = super.layoutAttributesForElementsInRect(rect)
         if attributesArray != nil {
             for attribute in attributesArray! {
@@ -212,7 +212,7 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
         return attributesArray
     }
     
-    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
+    override public func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
         if keyPath == "collectionView" {
             self.setUpGestureRecognizers()
         }else {
@@ -308,7 +308,7 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
             }, completion:nil)
     }
     
-    func continuousScroll() {
+    internal func continuousScroll() {
         if self.cellFakeView == nil {
             return
         }
@@ -400,7 +400,7 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
     }
     
     // long press gesture
-    func handleLongPress(longPress: UILongPressGestureRecognizer!) {
+    internal func handleLongPress(longPress: UILongPressGestureRecognizer!) {
         let location = longPress.locationInView(self.collectionView)
         var indexPath: NSIndexPath? = self.collectionView?.indexPathForItemAtPoint(location)
         
@@ -465,7 +465,7 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
     }
     
     // pan gesture
-    func handlePanGesture(pan: UIPanGestureRecognizer!) {
+    internal func handlePanGesture(pan: UIPanGestureRecognizer!) {
         self.panTranslation = pan.translationInView(self.collectionView!)
         if self.cellFakeView != nil && self.fakeCellCenter != nil && self.panTranslation != nil {
             switch pan.state {
@@ -486,7 +486,7 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
     }
     
     // gesture recognize delegate
-    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+    public func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
         // allow move item
         let location = gestureRecognizer.locationInView(self.collectionView)
         if let indexPath = self.collectionView?.indexPathForItemAtPoint(location) {
@@ -508,7 +508,7 @@ class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelega
         return true
     }
     
-    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         if gestureRecognizer.isEqual(self.longPress) {
             if otherGestureRecognizer.isEqual(self.panGesture) {
                 return true
