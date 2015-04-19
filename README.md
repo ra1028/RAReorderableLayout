@@ -14,8 +14,14 @@ RAReorderableLayout
 
 
 ## Installation
-Simply copy RAReorderableLayout.swift into your project.  
-Cocoapods has not yet supported swift :(
+__iOS8__  
+1. Add to your Podfile as follows.  
+    use_frameworks!  
+    pod 'RAReorderableLaout'  
+2. pod intall  
+
+__iOS7__  
+1. Simply copy RAReorderableLayout.swift into your project.
 
 
 ## Usage
@@ -30,10 +36,10 @@ Delegate
 ```
 optional func collectionView(collectionView: UICollectionView, atIndexPath: NSIndexPath, willMoveToIndexPath toIndexPath: NSIndexPath)
 optional func collectionView(collectionView: UICollectionView, atIndexPath: NSIndexPath, didMoveToIndexPath toIndexPath: NSIndexPath)
-    
+
 optional func collectionView(collectionView: UICollectionView, allowMoveAtIndexPath indexPath: NSIndexPath) -> Bool
 optional func collectionView(collectionView: UICollectionView, atIndexPath: NSIndexPath, canMoveToIndexPath: NSIndexPath) -> Bool
-    
+
 optional func collectionView(collectionView: UICollectionView, collectionViewLayout layout: RAReorderableLayout, willBeginDraggingItemAtIndexPath indexPath: NSIndexPath)
 optional func collectionView(collectionView: UICollectionView, collectionViewLayout layout: RAReorderableLayout, didBeginDraggingItemAtIndexPath indexPath: NSIndexPath)
 optional func collectionView(collectionView: UICollectionView, collectionViewLayout layout: RAReorderableLayout, willEndDraggingItemToIndexPath indexPath: NSIndexPath)
@@ -59,4 +65,3 @@ var scrollSpeedValue: CGFloat = 10.0
 
 ## License
 RAReorderableLayout is available under the MIT license. See the LICENSE file for more info.
-
