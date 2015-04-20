@@ -17,7 +17,7 @@ RAReorderableLayout
 __iOS8__  
 1. Add to your Podfile as follows.  
     use_frameworks!  
-    pod 'RAReorderableLaout'  
+    pod 'RAReorderableLayout'  
 2. pod intall  
 
 __iOS7__  
