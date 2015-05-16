@@ -398,7 +398,35 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
             self.collectionView?.addGestureRecognizer(self.panGesture!)
         }
     }
-    
+
+    public func cancelDrag() {
+        self.cancelDrag(toIndexPath: nil)
+    }
+
+    private func cancelDrag(#toIndexPath: NSIndexPath!) {
+        if self.cellFakeView == nil {
+            return
+        }
+
+        // will end drag item
+        self.delegate?.collectionView?(self.collectionView!, collectionViewLayout: self, willEndDraggingItemToIndexPath: toIndexPath)
+
+        self.collectionView?.scrollsToTop = true
+
+        self.fakeCellCenter = nil
+
+        self.invalidateDisplayLink()
+
+        self.cellFakeView!.pushBackView({ () -> Void in
+            self.cellFakeView!.removeFromSuperview()
+            self.cellFakeView = nil
+            self.invalidateLayout()
+
+            // did end drag item
+            self.delegate?.collectionView?(self.collectionView!, collectionViewLayout: self, didEndDraggingItemToIndexPath: toIndexPath)
+        })
+    }
+
     // long press gesture
     internal func handleLongPress(longPress: UILongPressGestureRecognizer!) {
         let location = longPress.locationInView(self.collectionView)
@@ -438,27 +466,7 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
         case .Cancelled:
             fallthrough
         case .Ended:
-            if self.cellFakeView == nil {
-                break
-            }
-            
-            // will end drag item
-            self.delegate?.collectionView?(self.collectionView!, collectionViewLayout: self, willEndDraggingItemToIndexPath: indexPath!)
-            
-            self.collectionView?.scrollsToTop = true
-            
-            self.fakeCellCenter = nil
-            
-            self.invalidateDisplayLink()
-            
-            self.cellFakeView!.pushBackView({ () -> Void in
-                self.cellFakeView!.removeFromSuperview()
-                self.cellFakeView = nil
-                self.invalidateLayout()
-                
-                // did end drag item
-                self.delegate?.collectionView?(self.collectionView!, collectionViewLayout: self, didEndDraggingItemToIndexPath: indexPath!)
-            })
+            self.cancelDrag(toIndexPath: indexPath)
         default:
             break
         }
