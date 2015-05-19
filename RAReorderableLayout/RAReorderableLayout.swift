@@ -15,10 +15,10 @@ import UIKit
     optional func collectionView(collectionView: UICollectionView, allowMoveAtIndexPath indexPath: NSIndexPath) -> Bool
     optional func collectionView(collectionView: UICollectionView, atIndexPath: NSIndexPath, canMoveToIndexPath: NSIndexPath) -> Bool
     
-    optional func collectionView(collectionView: UICollectionView, collectionViewLayout layout: RAReorderableLayout, willBeginDraggingItemAtIndexPath indexPath: NSIndexPath)
-    optional func collectionView(collectionView: UICollectionView, collectionViewLayout layout: RAReorderableLayout, didBeginDraggingItemAtIndexPath indexPath: NSIndexPath)
-    optional func collectionView(collectionView: UICollectionView, collectionViewLayout layout: RAReorderableLayout, willEndDraggingItemToIndexPath indexPath: NSIndexPath)
-    optional func collectionView(collectionView: UICollectionView, collectionViewLayout layout: RAReorderableLayout, didEndDraggingItemToIndexPath indexPath: NSIndexPath)
+    optional func collectionView(collectionView: UICollectionView, collectionViewLayout layout: RAReorderableLayout, willBeginDraggingItemAtIndexPath indexPath: NSIndexPath?)
+    optional func collectionView(collectionView: UICollectionView, collectionViewLayout layout: RAReorderableLayout, didBeginDraggingItemAtIndexPath indexPath: NSIndexPath?)
+    optional func collectionView(collectionView: UICollectionView, collectionViewLayout layout: RAReorderableLayout, willEndDraggingItemToIndexPath indexPath: NSIndexPath?)
+    optional func collectionView(collectionView: UICollectionView, collectionViewLayout layout: RAReorderableLayout, didEndDraggingItemToIndexPath indexPath: NSIndexPath?)
 }
 
 @objc public protocol RAReorderableLayoutDataSource: UICollectionViewDataSource {
@@ -385,6 +385,7 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
         }
         
         self.longPress = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
+        self.longPress?.minimumPressDuration = 0.5;
         self.panGesture = UIPanGestureRecognizer(target: self, action: "handlePanGesture:")
         self.longPress?.delegate = self
         self.panGesture?.delegate = self
@@ -403,7 +404,7 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
         self.cancelDrag(toIndexPath: nil)
     }
 
-    private func cancelDrag(#toIndexPath: NSIndexPath!) {
+    private func cancelDrag(#toIndexPath: NSIndexPath?) {
         if self.cellFakeView == nil {
             return
         }
@@ -418,7 +419,7 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
         self.invalidateDisplayLink()
 
         self.cellFakeView!.pushBackView({ () -> Void in
-            self.cellFakeView!.removeFromSuperview()
+            self.cellFakeView?.removeFromSuperview()
             self.cellFakeView = nil
             self.invalidateLayout()
 
@@ -433,7 +434,7 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
         var indexPath: NSIndexPath? = self.collectionView?.indexPathForItemAtPoint(location)
         
         if self.cellFakeView != nil {
-            indexPath = self.cellFakeView!.indexPath
+            indexPath = self.cellFakeView?.indexPath
         }
         
         if indexPath == nil {
@@ -443,7 +444,7 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
         switch longPress.state {
         case .Began:
             // will begin drag item
-            self.delegate?.collectionView?(self.collectionView!, collectionViewLayout: self, willBeginDraggingItemAtIndexPath: indexPath!)
+            self.delegate?.collectionView?(self.collectionView!, collectionViewLayout: self, willBeginDraggingItemAtIndexPath: indexPath)
             
             self.collectionView?.scrollsToTop = false
             
@@ -462,7 +463,7 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
             self.cellFakeView!.pushFowardView()
             
             // did begin drag item
-            self.delegate?.collectionView?(self.collectionView!, collectionViewLayout: self, didBeginDraggingItemAtIndexPath: indexPath!)
+            self.delegate?.collectionView?(self.collectionView!, collectionViewLayout: self, didBeginDraggingItemAtIndexPath: indexPath)
         case .Cancelled:
             fallthrough
         case .Ended:
