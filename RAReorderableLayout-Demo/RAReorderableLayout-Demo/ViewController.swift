@@ -10,10 +10,10 @@ import UIKit
 
 class ViewController: UIViewController {
     @IBOutlet weak var verticalButton: RAButton!
-
+    
     @IBOutlet weak var horizontalButton: RAButton!
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -53,11 +53,11 @@ class RAButton: UIButton {
                 CGAffineTransformMakeScale(1.1, 1.1) : CGAffineTransformIdentity
             UIView.animateWithDuration(0.05, delay: 0, options: .BeginFromCurrentState, animations: { () -> Void in
                 self.transform = transform
-            }, completion: nil)
+                }, completion: nil)
         }
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.configure()
     }
@@ -71,6 +71,6 @@ class RAButton: UIButton {
         self.baseView = UIView(frame: self.bounds)
         self.layer.cornerRadius = CGRectGetWidth(self.bounds)
         self.baseView.addSubview(self)
-        self.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.translatesAutoresizingMaskIntoConstraints = false
     }
 }
