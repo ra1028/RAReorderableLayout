@@ -15,7 +15,7 @@ class HorizontalViewController: UIViewController, RAReorderableLayoutDelegate, R
     private var gradientLayer: CAGradientLayer?
     private var books: [Book] = []
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -29,8 +29,8 @@ class HorizontalViewController: UIViewController, RAReorderableLayoutDelegate, R
         self.applyGradation()
         
         let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        for (index, char) in enumerate(alphabet) {
-            let charIndex = advance(alphabet.startIndex, index)
+        for (index, _) in alphabet.characters.enumerate() {
+            let charIndex = alphabet.startIndex.advancedBy(index)
             var title = "BOOK "
             title += alphabet.substringWithRange(charIndex...charIndex)
             let color = UIColor(hue: 255.0 / 26.0 * CGFloat(index) / 255.0, saturation: 1.0, brightness: 0.9, alpha: 1.0)
@@ -52,7 +52,7 @@ class HorizontalViewController: UIViewController, RAReorderableLayoutDelegate, R
         let subColor = UIColor.clearColor().CGColor
         self.gradientLayer!.colors = [subColor, mainColor]
         self.gradientLayer!.locations = [0, 1]
-        self.gradientView.layer.insertSublayer(self.gradientLayer, atIndex: 0)
+        self.gradientView.layer.insertSublayer(self.gradientLayer!, atIndex: 0)
     }
     
     // collectionView delegate datasource
@@ -118,7 +118,7 @@ class BookCell: UICollectionViewCell {
         }
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -126,7 +126,7 @@ class BookCell: UICollectionViewCell {
         super.init(frame: frame)
         self.configure()
     }
-
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         self.titleLabel.text = nil
@@ -135,19 +135,19 @@ class BookCell: UICollectionViewCell {
     private func configure() {
         self.backCoverView = UIView(frame: self.bounds)
         self.backCoverView.backgroundColor = self.getDarkColor(UIColor.redColor(), minusValue: 20.0)
-        self.backCoverView.autoresizingMask = .FlexibleWidth | .FlexibleHeight
+        self.backCoverView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         
         self.pagesView = UIView(frame: CGRectMake(15.0, 0, CGRectGetWidth(self.bounds) - 25.0, CGRectGetHeight(self.bounds) - 5.0))
         self.pagesView.backgroundColor = UIColor.whiteColor()
-        self.pagesView.autoresizingMask = .FlexibleWidth | .FlexibleHeight
+        self.pagesView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         
         self.frontCoverView = UIView(frame: CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds) - 10.0))
         self.frontCoverView.backgroundColor = UIColor.redColor()
-        self.frontCoverView.autoresizingMask = .FlexibleWidth | .FlexibleHeight
+        self.frontCoverView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         
         self.bindingView = UIView(frame: CGRectMake(0, 0, 15.0, CGRectGetHeight(self.bounds)))
         self.bindingView.backgroundColor = self.getDarkColor(self.backCoverView?.backgroundColor, minusValue: 50.0)
-        self.bindingView.autoresizingMask = .FlexibleWidth | .FlexibleHeight
+        self.bindingView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         self.bindingView.layer.borderWidth = 1.0
         self.bindingView.layer.borderColor = UIColor.blackColor().CGColor
         
@@ -163,11 +163,11 @@ class BookCell: UICollectionViewCell {
         self.contentView.addSubview(self.bindingView)
         self.contentView.addSubview(self.titleLabel)
         
-        var backPath = UIBezierPath(roundedRect: self.backCoverView!.bounds, byRoundingCorners: .TopRight | .BottomRight, cornerRadii: CGSizeMake(10.0, 10.0))
-        var backMask = CAShapeLayer()
+        let backPath = UIBezierPath(roundedRect: self.backCoverView!.bounds, byRoundingCorners: [.TopRight, .BottomRight], cornerRadii: CGSizeMake(10.0, 10.0))
+        let backMask = CAShapeLayer()
         backMask.frame = self.backCoverView!.bounds
         backMask.path = backPath.CGPath
-        var backLineLayer = CAShapeLayer()
+        let backLineLayer = CAShapeLayer()
         backLineLayer.frame = self.backCoverView!.bounds
         backLineLayer.path = backPath.CGPath
         backLineLayer.strokeColor = UIColor.blackColor().CGColor
@@ -176,11 +176,11 @@ class BookCell: UICollectionViewCell {
         self.backCoverView!.layer.mask = backMask
         self.backCoverView!.layer.insertSublayer(backLineLayer, atIndex: 0)
         
-        var frontPath = UIBezierPath(roundedRect: self.frontCoverView!.bounds, byRoundingCorners: .TopRight | .BottomRight, cornerRadii: CGSizeMake(10.0, 10.0))
-        var frontMask = CAShapeLayer()
+        let frontPath = UIBezierPath(roundedRect: self.frontCoverView!.bounds, byRoundingCorners: [.TopRight, .BottomRight], cornerRadii: CGSizeMake(10.0, 10.0))
+        let frontMask = CAShapeLayer()
         frontMask.frame = self.frontCoverView!.bounds
         frontMask.path = frontPath.CGPath
-        var frontLineLayer = CAShapeLayer()
+        let frontLineLayer = CAShapeLayer()
         frontLineLayer.path = frontPath.CGPath
         frontLineLayer.strokeColor = UIColor.blackColor().CGColor
         frontLineLayer.fillColor = UIColor.clearColor().CGColor
@@ -188,7 +188,7 @@ class BookCell: UICollectionViewCell {
         self.frontCoverView!.layer.mask = frontMask
         self.frontCoverView!.layer.insertSublayer(frontLineLayer, atIndex: 0)
     }
-
+    
     private func getDarkColor(color: UIColor?, minusValue: CGFloat) -> UIColor? {
         if color == nil {
             return nil
