@@ -9,7 +9,7 @@
 import UIKit
 
 @objc public protocol RAReorderableLayoutDelegate: UICollectionViewDelegateFlowLayout {
-        optional func collectionView(collectionView: UIColleoctionView, atIndexPath: NSIndexPath, willMoveToIndexPath toIndexPath: NSIndexPath)
+        optional func collectionView(collectionView: UICollectionView, atIndexPath: NSIndexPath, willMoveToIndexPath toIndexPath: NSIndexPath)
         optional func collectionView(collectionView: UICollectionView, atIndexPath: NSIndexPath, didMoveToIndexPath toIndexPath: NSIndexPath)
         
         optional func collectionView(collectionView: UICollectionView, allowMoveAtIndexPath indexPath: NSIndexPath) -> Bool
