@@ -15,10 +15,18 @@ RAReorderableLayout
 
 ## Installation
 __iOS8__  
-1. Add to your Podfile as follows.  
-    use_frameworks!  
-    pod 'RAReorderableLayout'  
-2. pod intall  
+
+### CocoaPods
+```ruby
+# Podfile  
+use_frameworks!  
+pod "RAReorderableLayout"  
+```
+### Carthage
+```ruby
+ # Cartfile
+ github "ra1028/RAReorderableLayout"
+ ```
 
 __iOS7__  
 1. Simply copy RAReorderableLayout.swift into your project.
