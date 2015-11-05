@@ -160,7 +160,7 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
                 self.configureObserver()
         }
         
-        override init() {
+        public override init() {
                 super.init()
                 self.configureObserver()
         }
