@@ -14,19 +14,8 @@
 		2AF54EDF1A002CD1007A7144 /* RAReorderableLayout_Demo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2AF54EDD1A002CD1007A7144 /* RAReorderableLayout_Demo.xcdatamodeld */; };
 		2AF54EE11A002CD1007A7144 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF54EE01A002CD1007A7144 /* ViewController.swift */; };
 		2AF54EE61A002CD1007A7144 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2AF54EE51A002CD1007A7144 /* Images.xcassets */; };
-		2AF54EF51A002CD1007A7144 /* RAReorderableLayout_DemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF54EF41A002CD1007A7144 /* RAReorderableLayout_DemoTests.swift */; };
 		2AF54F031A002D2B007A7144 /* RAReorderableLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF54F021A002D2B007A7144 /* RAReorderableLayout.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		2AF54EEF1A002CD1007A7144 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2AF54ECE1A002CD1007A7144 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2AF54ED51A002CD1007A7144;
-			remoteInfo = "RAReorderableLayout-Demo";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		2A972DBD1A195D930084B0D5 /* VerticalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = VerticalViewController.swift; sourceTree = "<group>"; tabWidth = 4; };
@@ -39,7 +28,6 @@
 		2AF54EE01A002CD1007A7144 /* ViewController.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; tabWidth = 4; };
 		2AF54EE51A002CD1007A7144 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2AF54EE81A002CD1007A7144 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		2AF54EEE1A002CD1007A7144 /* RAReorderableLayout-DemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RAReorderableLayout-DemoTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AF54EF31A002CD1007A7144 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2AF54EF41A002CD1007A7144 /* RAReorderableLayout_DemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RAReorderableLayout_DemoTests.swift; sourceTree = "<group>"; };
 		2AF54F021A002D2B007A7144 /* RAReorderableLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RAReorderableLayout.swift; sourceTree = "<group>"; };
@@ -47,13 +35,6 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		2AF54ED31A002CD1007A7144 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2AF54EEB1A002CD1007A7144 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -77,7 +58,6 @@
 			isa = PBXGroup;
 			children = (
 				2AF54ED61A002CD1007A7144 /* RAReorderableLayout-Demo.app */,
-				2AF54EEE1A002CD1007A7144 /* RAReorderableLayout-DemoTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -152,39 +132,18 @@
 			productReference = 2AF54ED61A002CD1007A7144 /* RAReorderableLayout-Demo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2AF54EED1A002CD1007A7144 /* RAReorderableLayout-DemoTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2AF54EFB1A002CD1007A7144 /* Build configuration list for PBXNativeTarget "RAReorderableLayout-DemoTests" */;
-			buildPhases = (
-				2AF54EEA1A002CD1007A7144 /* Sources */,
-				2AF54EEB1A002CD1007A7144 /* Frameworks */,
-				2AF54EEC1A002CD1007A7144 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				2AF54EF01A002CD1007A7144 /* PBXTargetDependency */,
-			);
-			name = "RAReorderableLayout-DemoTests";
-			productName = "RAReorderableLayout-DemoTests";
-			productReference = 2AF54EEE1A002CD1007A7144 /* RAReorderableLayout-DemoTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		2AF54ECE1A002CD1007A7144 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = "Ryo Aoyama";
 				TargetAttributes = {
 					2AF54ED51A002CD1007A7144 = {
 						CreatedOnToolsVersion = 6.1;
-					};
-					2AF54EED1A002CD1007A7144 = {
-						CreatedOnToolsVersion = 6.1;
-						TestTargetID = 2AF54ED51A002CD1007A7144;
 					};
 				};
 			};
@@ -202,7 +161,6 @@
 			projectRoot = "";
 			targets = (
 				2AF54ED51A002CD1007A7144 /* RAReorderableLayout-Demo */,
-				2AF54EED1A002CD1007A7144 /* RAReorderableLayout-DemoTests */,
 			);
 		};
 /* End PBXProject section */
@@ -214,13 +172,6 @@
 			files = (
 				2AF54EE61A002CD1007A7144 /* Images.xcassets in Resources */,
 				2A972DC21A1961BF0084B0D5 /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2AF54EEC1A002CD1007A7144 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,23 +191,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2AF54EEA1A002CD1007A7144 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2AF54EF51A002CD1007A7144 /* RAReorderableLayout_DemoTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		2AF54EF01A002CD1007A7144 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2AF54ED51A002CD1007A7144 /* RAReorderableLayout-Demo */;
-			targetProxy = 2AF54EEF1A002CD1007A7144 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		2AF54EE71A002CD1007A7144 /* LaunchScreen.xib */ = {
@@ -290,6 +225,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -363,6 +299,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ryo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -383,41 +320,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ryo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		2AF54EFC1A002CD1007A7144 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "RAReorderableLayout-DemoTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RAReorderableLayout-Demo.app/RAReorderableLayout-Demo";
-			};
-			name = Debug;
-		};
-		2AF54EFD1A002CD1007A7144 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "RAReorderableLayout-DemoTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RAReorderableLayout-Demo.app/RAReorderableLayout-Demo";
 			};
 			name = Release;
 		};
@@ -438,15 +342,6 @@
 			buildConfigurations = (
 				2AF54EF91A002CD1007A7144 /* Debug */,
 				2AF54EFA1A002CD1007A7144 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2AF54EFB1A002CD1007A7144 /* Build configuration list for PBXNativeTarget "RAReorderableLayout-DemoTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2AF54EFC1A002CD1007A7144 /* Debug */,
-				2AF54EFD1A002CD1007A7144 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

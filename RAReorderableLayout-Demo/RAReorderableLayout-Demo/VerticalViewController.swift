@@ -19,25 +19,25 @@ class VerticalViewController: UIViewController, RAReorderableLayoutDelegate, RAR
         super.viewDidLoad()
         self.title = "RAReorderableLayout"
         let nib = UINib(nibName: "verticalCell", bundle: nil)
-        self.collectionView.registerNib(nib, forCellWithReuseIdentifier: "cell")
-        self.collectionView.delegate = self
-        self.collectionView.dataSource = self
+        collectionView.registerNib(nib, forCellWithReuseIdentifier: "cell")
+        collectionView.delegate = self
+        collectionView.dataSource = self
         
         for index in 0..<18 {
             let name = "Sample\(index).jpg"
             let image = UIImage(named: name)
-            self.imagesForSection0.append(image!)
+            imagesForSection0.append(image!)
         }
         for index in 18..<30 {
             let name = "Sample\(index).jpg"
             let image = UIImage(named: name)
-            self.imagesForSection1.append(image!)
+            imagesForSection1.append(image!)
         }
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.collectionView.contentInset = UIEdgeInsetsMake(self.topLayoutGuide.length, 0, 0, 0)
+        collectionView.contentInset = UIEdgeInsetsMake(topLayoutGuide.length, 0, 0, 0)
     }
     
     // RAReorderableLayout delegate datasource
@@ -71,19 +71,19 @@ class VerticalViewController: UIViewController, RAReorderableLayoutDelegate, RAR
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if section == 0 {
-            return self.imagesForSection0.count
+            return imagesForSection0.count
         }else {
-            return self.imagesForSection1.count
+            return imagesForSection1.count
         }
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = self.collectionView.dequeueReusableCellWithReuseIdentifier("verticalCell", forIndexPath: indexPath) as! RACollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("verticalCell", forIndexPath: indexPath) as! RACollectionViewCell
         
         if indexPath.section == 0 {
-            cell.imageView.image = self.imagesForSection0[indexPath.item]
+            cell.imageView.image = imagesForSection0[indexPath.item]
         }else {
-            cell.imageView.image = self.imagesForSection1[indexPath.item]
+            cell.imageView.image = imagesForSection1[indexPath.item]
         }
         return cell
     }
@@ -98,15 +98,15 @@ class VerticalViewController: UIViewController, RAReorderableLayoutDelegate, RAR
     func collectionView(collectionView: UICollectionView, atIndexPath: NSIndexPath, didMoveToIndexPath toIndexPath: NSIndexPath) {
         var photo: UIImage
         if atIndexPath.section == 0 {
-            photo = self.imagesForSection0.removeAtIndex(atIndexPath.item)
+            photo = imagesForSection0.removeAtIndex(atIndexPath.item)
         }else {
-            photo = self.imagesForSection1.removeAtIndex(atIndexPath.item)
+            photo = imagesForSection1.removeAtIndex(atIndexPath.item)
         }
         
         if toIndexPath.section == 0 {
-            self.imagesForSection0.insert(photo, atIndex: toIndexPath.item)
+            imagesForSection0.insert(photo, atIndex: toIndexPath.item)
         }else {
-            self.imagesForSection1.insert(photo, atIndex: toIndexPath.item)
+            imagesForSection1.insert(photo, atIndex: toIndexPath.item)
         }
     }
     
@@ -123,7 +123,7 @@ class VerticalViewController: UIViewController, RAReorderableLayoutDelegate, RAR
     }
     
     func scrollTrigerPaddingInCollectionView(collectionView: UICollectionView) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(self.collectionView.contentInset.top, 0, self.collectionView.contentInset.bottom, 0)
+        return UIEdgeInsetsMake(collectionView.contentInset.top, 0, collectionView.contentInset.bottom, 0)
     }
 }
 
@@ -133,47 +133,47 @@ class RACollectionViewCell: UICollectionViewCell {
     var hilightedCover: UIView!
     override var highlighted: Bool {
         didSet {
-            self.hilightedCover.hidden = !self.highlighted
+            hilightedCover.hidden = !highlighted
         }
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.configure()
+        configure()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.imageView.frame = self.bounds
-        self.hilightedCover.frame = self.bounds
-        self.applyGradation(self.imageView)
+        imageView.frame = bounds
+        hilightedCover.frame = bounds
+        applyGradation(imageView)
     }
     
     private func configure() {
-        self.imageView = UIImageView()
-        self.imageView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        self.imageView.contentMode = UIViewContentMode.ScaleAspectFill
-        self.addSubview(self.imageView)
+        imageView = UIImageView()
+        imageView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        imageView.contentMode = UIViewContentMode.ScaleAspectFill
+        addSubview(imageView)
         
-        self.hilightedCover = UIView()
-        self.hilightedCover.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        self.hilightedCover.backgroundColor = UIColor(white: 0, alpha: 0.5)
-        self.hilightedCover.hidden = true
-        self.addSubview(self.hilightedCover)
+        hilightedCover = UIView()
+        hilightedCover.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        hilightedCover.backgroundColor = UIColor(white: 0, alpha: 0.5)
+        hilightedCover.hidden = true
+        addSubview(hilightedCover)
     }
     
     private func applyGradation(gradientView: UIView!) {
-        self.gradientLayer?.removeFromSuperlayer()
-        self.gradientLayer = nil
+        gradientLayer?.removeFromSuperlayer()
+        gradientLayer = nil
         
-        self.gradientLayer = CAGradientLayer()
-        self.gradientLayer!.frame = gradientView.bounds
+        gradientLayer = CAGradientLayer()
+        gradientLayer!.frame = gradientView.bounds
         
         let mainColor = UIColor(white: 0, alpha: 0.3).CGColor
         let subColor = UIColor.clearColor().CGColor
-        self.gradientLayer!.colors = [subColor, mainColor]
-        self.gradientLayer!.locations = [0, 1]
+        gradientLayer!.colors = [subColor, mainColor]
+        gradientLayer!.locations = [0, 1]
         
-        gradientView.layer.addSublayer(self.gradientLayer!)
+        gradientView.layer.addSublayer(gradientLayer!)
     }
 }
