@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/ra1028"
   s.author       = { "ra1028" => "r.fe51028.r@gmail.com" }
   s.platform     = :ios, '8.0'
-  s.source       = { :git => "https://github.com/ra1028/RAReorderableLayout.git", :tag => spec.version.to_s }
+  s.source       = { :git => "https://github.com/ra1028/RAReorderableLayout.git", :tag => s.version.to_s }
   s.requires_arc = true
   s.source_files =  'RAReorderableLayout/*.swift'
 end
