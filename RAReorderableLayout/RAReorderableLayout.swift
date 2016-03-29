@@ -580,10 +580,10 @@ private class RACellFakeView: UIView {
     
     private func getCellImage() -> UIImage {
         UIGraphicsBeginImageContextWithOptions(cell!.bounds.size, false, UIScreen.mainScreen().scale * 2)
+        defer { UIGraphicsEndImageContext() }
+
         cell!.drawViewHierarchyInRect(cell!.bounds, afterScreenUpdates: true)
-        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return image
+        return UIGraphicsGetImageFromCurrentImageContext()
     }
 }
 
