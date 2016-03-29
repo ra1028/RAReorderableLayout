@@ -26,8 +26,8 @@ import UIKit
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     
     optional func collectionView(collectionView: UICollectionView, reorderingItemAlphaInSection section: Int) -> CGFloat
-    optional func scrollTrigerEdgeInsetsInCollectionView(collectionView: UICollectionView) -> UIEdgeInsets
-    optional func scrollTrigerPaddingInCollectionView(collectionView: UICollectionView) -> UIEdgeInsets
+    optional func scrollTriggerEdgeInsetsInCollectionView(collectionView: UICollectionView) -> UIEdgeInsets
+    optional func scrollTriggerPaddingInCollectionView(collectionView: UICollectionView) -> UIEdgeInsets
     optional func scrollSpeedValueInCollectionView(collectionView: UICollectionView) -> CGFloat
 }
 
@@ -78,9 +78,9 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
     
     private var fakeCellCenter: CGPoint?
     
-    public var trigerInsets: UIEdgeInsets = UIEdgeInsetsMake(100.0, 100.0, 100.0, 100.0)
+    public var triggerInsets: UIEdgeInsets = UIEdgeInsetsMake(100.0, 100.0, 100.0, 100.0)
     
-    public var trigerPadding: UIEdgeInsets = UIEdgeInsetsZero
+    public var triggerPadding: UIEdgeInsets = UIEdgeInsetsZero
     
     public var scrollSpeedValue: CGFloat = 10.0
     
@@ -123,20 +123,20 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
         return nil
     }
     
-    private var trigerInsetTop: CGFloat {
-        return scrollDirection == .Vertical ? trigerInsets.top : trigerInsets.left
+    private var triggerInsetTop: CGFloat {
+        return scrollDirection == .Vertical ? triggerInsets.top : triggerInsets.left
     }
     
-    private var trigerInsetEnd: CGFloat {
-        return scrollDirection == .Vertical ? trigerInsets.top : trigerInsets.left
+    private var triggerInsetEnd: CGFloat {
+        return scrollDirection == .Vertical ? triggerInsets.top : triggerInsets.left
     }
     
-    private var trigerPaddingTop: CGFloat {
-        return scrollDirection == .Vertical ? trigerPadding.top : trigerPadding.left
+    private var triggerPaddingTop: CGFloat {
+        return scrollDirection == .Vertical ? triggerPadding.top : triggerPadding.left
     }
     
-    private var trigerPaddingEnd: CGFloat {
-        return scrollDirection == .Vertical ? trigerPadding.bottom : trigerPadding.right
+    private var triggerPaddingEnd: CGFloat {
+        return scrollDirection == .Vertical ? triggerPadding.bottom : triggerPadding.right
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -156,14 +156,14 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
     override public func prepareLayout() {
         super.prepareLayout()
         
-        // scroll triger insets
-        if let insets = datasource?.scrollTrigerEdgeInsetsInCollectionView?(self.collectionView!) {
-            trigerInsets = insets
+        // scroll trigger insets
+        if let insets = datasource?.scrollTriggerEdgeInsetsInCollectionView?(self.collectionView!) {
+            triggerInsets = insets
         }
         
         // scroll trier padding
-        if let padding = datasource?.scrollTrigerPaddingInCollectionView?(self.collectionView!) {
-            trigerPadding = padding
+        if let padding = datasource?.scrollTriggerPaddingInCollectionView?(self.collectionView!) {
+            triggerPadding = padding
         }
         
         // scroll speed value
@@ -225,10 +225,10 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
     private func beginScrollIfNeeded() {
         if cellFakeView == nil { return }
         
-        if  fakeCellTopEdge <= offsetFromTop + trigerPaddingTop + trigerInsetTop {
+        if  fakeCellTopEdge <= offsetFromTop + triggerPaddingTop + triggerInsetTop {
             continuousScrollDirection = .toTop
             setUpDisplayLink()
-        } else if fakeCellEndEdge >= offsetFromTop + collectionViewLength - trigerPaddingEnd - trigerInsetEnd {
+        } else if fakeCellEndEdge >= offsetFromTop + collectionViewLength - triggerPaddingEnd - triggerInsetEnd {
             continuousScrollDirection = .toEnd
             setUpDisplayLink()
         } else {
@@ -271,7 +271,7 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
     internal func continuousScroll() {
         guard let fakeCell = cellFakeView else { return }
         
-        let percentage = calcTrigerPercentage()
+        let percentage = calcTriggerPercentage()
         var scrollRate = continuousScrollDirection.scrollValue(speedValue: self.scrollSpeedValue, percentage: percentage)
         
         let offset = offsetFromTop
@@ -302,22 +302,22 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
         moveItemIfNeeded()
     }
     
-    private func calcTrigerPercentage() -> CGFloat {
+    private func calcTriggerPercentage() -> CGFloat {
         guard cellFakeView != nil else { return 0 }
         
         let offset = offsetFromTop
         let offsetEnd = offsetFromTop + collectionViewLength
-        let paddingEnd = trigerPaddingEnd
+        let paddingEnd = triggerPaddingEnd
         
         var percentage: CGFloat = 0
         
         if self.continuousScrollDirection == .toTop {
             if let fakeCellEdge = fakeCellTopEdge {
-                percentage = 1.0 - ((fakeCellEdge - (offset + trigerPaddingTop)) / trigerInsetTop)
+                percentage = 1.0 - ((fakeCellEdge - (offset + triggerPaddingTop)) / triggerInsetTop)
             }
         }else if continuousScrollDirection == .toEnd {
             if let fakeCellEdge = fakeCellEndEdge {
-                percentage = 1.0 - (((insetsTop + offsetEnd - paddingEnd) - (fakeCellEdge + insetsTop)) / trigerInsetEnd)
+                percentage = 1.0 - (((insetsTop + offsetEnd - paddingEnd) - (fakeCellEdge + insetsTop)) / triggerInsetEnd)
             }
         }
         
