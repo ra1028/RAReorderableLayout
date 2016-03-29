@@ -430,10 +430,9 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
     public func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
         // allow move item
         let location = gestureRecognizer.locationInView(collectionView)
-        if let indexPath = collectionView?.indexPathForItemAtPoint(location) {
-            if delegate?.collectionView?(collectionView!, allowMoveAtIndexPath: indexPath) == false {
-                return false
-            }
+        if let indexPath = collectionView?.indexPathForItemAtPoint(location) where
+            delegate?.collectionView?(collectionView!, allowMoveAtIndexPath: indexPath) == false {
+            return false
         }
         
         if gestureRecognizer.isEqual(longPress) {
