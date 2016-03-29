@@ -89,7 +89,7 @@ class HorizontalViewController: UIViewController, RAReorderableLayoutDelegate, R
         books.insert(book, atIndex: toIndexPath.item)
     }
     
-    func scrollTrigerEdgeInsetsInCollectionView(collectionView: UICollectionView) -> UIEdgeInsets {
+    func scrollTriggerEdgeInsetsInCollectionView(collectionView: UICollectionView) -> UIEdgeInsets {
         return UIEdgeInsetsMake(0, 50, 0, 50)
     }
     
