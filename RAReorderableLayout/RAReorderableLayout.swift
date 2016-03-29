@@ -207,7 +207,7 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
     }
     
     private func setUpDisplayLink() {
-        if displayLink != nil {
+        guard displayLink == nil else {
             return
         }
         
@@ -244,7 +244,7 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
                 return
         }
         
-        if atIndexPath.isEqual(toIndexPath) { return }
+        guard !atIndexPath.isEqual(toIndexPath) else { return }
         
         // can move item
         if let canMove = delegate?.collectionView?(collectionView!, atIndexPath: atIndexPath, canMoveToIndexPath: toIndexPath) where !canMove {
