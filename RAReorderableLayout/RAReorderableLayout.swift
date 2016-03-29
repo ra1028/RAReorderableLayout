@@ -78,9 +78,9 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
     
     private var fakeCellCenter: CGPoint?
     
-    public var triggerInsets: UIEdgeInsets = UIEdgeInsetsMake(100.0, 100.0, 100.0, 100.0)
+    public var trigerInsets: UIEdgeInsets = UIEdgeInsetsMake(100.0, 100.0, 100.0, 100.0)
     
-    public var triggerPadding: UIEdgeInsets = UIEdgeInsetsZero
+    public var trigerPadding: UIEdgeInsets = UIEdgeInsetsZero
     
     public var scrollSpeedValue: CGFloat = 10.0
     
@@ -124,19 +124,19 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
     }
     
     private var triggerInsetTop: CGFloat {
-        return scrollDirection == .Vertical ? triggerInsets.top : triggerInsets.left
+        return scrollDirection == .Vertical ? trigerInsets.top : trigerInsets.left
     }
     
     private var triggerInsetEnd: CGFloat {
-        return scrollDirection == .Vertical ? triggerInsets.top : triggerInsets.left
+        return scrollDirection == .Vertical ? trigerInsets.top : trigerInsets.left
     }
     
     private var triggerPaddingTop: CGFloat {
-        return scrollDirection == .Vertical ? triggerPadding.top : triggerPadding.left
+        return scrollDirection == .Vertical ? trigerPadding.top : trigerPadding.left
     }
     
     private var triggerPaddingEnd: CGFloat {
-        return scrollDirection == .Vertical ? triggerPadding.bottom : triggerPadding.right
+        return scrollDirection == .Vertical ? trigerPadding.bottom : trigerPadding.right
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -158,12 +158,12 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
         
         // scroll trigger insets
         if let insets = datasource?.scrollTrigerEdgeInsetsInCollectionView?(self.collectionView!) {
-            triggerInsets = insets
+            trigerInsets = insets
         }
         
         // scroll trier padding
         if let padding = datasource?.scrollTrigerPaddingInCollectionView?(self.collectionView!) {
-            triggerPadding = padding
+            trigerPadding = padding
         }
         
         // scroll speed value
