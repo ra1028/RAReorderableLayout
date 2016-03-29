@@ -173,24 +173,17 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
     }
     
     override public func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        let attributesArray = super.layoutAttributesForElementsInRect(rect)
-        if attributesArray != nil {
-            for attribute in attributesArray! {
-                let layoutAttribute = attribute
-                if layoutAttribute.representedElementCategory == .Cell {
-                    if layoutAttribute.indexPath.isEqual(cellFakeView?.indexPath) {
-                        var cellAlpha: CGFloat = 0
-                        
-                        // reordering cell alpha
-                        if let alpha = datasource?.collectionView?(collectionView!, reorderingItemAlphaInSection: layoutAttribute.indexPath.section) {
-                            cellAlpha = alpha
-                        }
-                        
-                        layoutAttribute.alpha = cellAlpha
-                    }
-                }
-            }
+        guard let attributesArray = super.layoutAttributesForElementsInRect(rect) else { return nil }
+
+        attributesArray.filter {
+            $0.representedElementCategory == .Cell
+        }.filter {
+            $0.indexPath.isEqual(cellFakeView?.indexPath)
+        }.forEach {
+            // reordering cell alpha
+            $0.alpha = datasource?.collectionView?(collectionView!, reorderingItemAlphaInSection: $0.indexPath.section) ?? 0
         }
+
         return attributesArray
     }
     
