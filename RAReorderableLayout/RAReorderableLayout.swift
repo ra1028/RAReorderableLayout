@@ -435,36 +435,42 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
             return false
         }
         
-        if gestureRecognizer.isEqual(longPress) {
+        switch gestureRecognizer {
+        case longPress:
             if (collectionView!.panGestureRecognizer.state != .Possible && collectionView!.panGestureRecognizer.state != .Failed) {
                 return false
             }
-        }else if gestureRecognizer.isEqual(panGesture) {
+        case panGesture:
             if (longPress!.state == .Possible || longPress!.state == .Failed) {
                 return false
             }
+        default:
+            return true
         }
-        
+
         return true
     }
     
     public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        if gestureRecognizer.isEqual(longPress) {
+        switch gestureRecognizer {
+        case longPress:
             if otherGestureRecognizer.isEqual(panGesture) {
                 return true
             }
-        }else if gestureRecognizer.isEqual(panGesture) {
+        case panGesture:
             if otherGestureRecognizer.isEqual(longPress) {
                 return true
             }else {
                 return false
             }
-        }else if gestureRecognizer.isEqual(collectionView?.panGestureRecognizer) {
+        case collectionView?.panGestureRecognizer:
             if (longPress!.state != .Possible || longPress!.state != .Failed) {
                 return false
             }
+        default:
+            return true
         }
-        
+
         return true
     }
 }
@@ -579,4 +585,10 @@ private class RACellFakeView: UIView {
         UIGraphicsEndImageContext()
         return image
     }
+}
+
+// Convenience method
+func ~= (obj:NSObjectProtocol?, r:UIGestureRecognizer) -> Bool
+{
+    return r.isEqual(obj)
 }
