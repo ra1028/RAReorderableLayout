@@ -110,7 +110,7 @@ class VerticalViewController: UIViewController, RAReorderableLayoutDelegate, RAR
         }
     }
     
-    func scrollTriggerEdgeInsetsInCollectionView(collectionView: UICollectionView) -> UIEdgeInsets {
+    func scrollTrigerEdgeInsetsInCollectionView(collectionView: UICollectionView) -> UIEdgeInsets {
         return UIEdgeInsetsMake(100.0, 100.0, 100.0, 100.0)
     }
     
@@ -122,7 +122,7 @@ class VerticalViewController: UIViewController, RAReorderableLayoutDelegate, RAR
         }
     }
     
-    func scrollTriggerPaddingInCollectionView(collectionView: UICollectionView) -> UIEdgeInsets {
+    func scrollTrigerPaddingInCollectionView(collectionView: UICollectionView) -> UIEdgeInsets {
         return UIEdgeInsetsMake(collectionView.contentInset.top, 0, collectionView.contentInset.bottom, 0)
     }
 }

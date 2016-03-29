@@ -26,8 +26,8 @@ import UIKit
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     
     optional func collectionView(collectionView: UICollectionView, reorderingItemAlphaInSection section: Int) -> CGFloat
-    optional func scrollTriggerEdgeInsetsInCollectionView(collectionView: UICollectionView) -> UIEdgeInsets
-    optional func scrollTriggerPaddingInCollectionView(collectionView: UICollectionView) -> UIEdgeInsets
+    optional func scrollTrigerEdgeInsetsInCollectionView(collectionView: UICollectionView) -> UIEdgeInsets
+    optional func scrollTrigerPaddingInCollectionView(collectionView: UICollectionView) -> UIEdgeInsets
     optional func scrollSpeedValueInCollectionView(collectionView: UICollectionView) -> CGFloat
 }
 
@@ -157,12 +157,12 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
         super.prepareLayout()
         
         // scroll trigger insets
-        if let insets = datasource?.scrollTriggerEdgeInsetsInCollectionView?(self.collectionView!) {
+        if let insets = datasource?.scrollTrigerEdgeInsetsInCollectionView?(self.collectionView!) {
             triggerInsets = insets
         }
         
         // scroll trier padding
-        if let padding = datasource?.scrollTriggerPaddingInCollectionView?(self.collectionView!) {
+        if let padding = datasource?.scrollTrigerPaddingInCollectionView?(self.collectionView!) {
             triggerPadding = padding
         }
         
