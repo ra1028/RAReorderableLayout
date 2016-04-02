@@ -41,7 +41,6 @@ class HorizontalViewController: UIViewController, RAReorderableLayoutDelegate, R
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        collectionView.contentInset = UIEdgeInsetsMake(topLayoutGuide.length, 0, 0, 0)
         gradientLayer?.frame = gradientView.bounds
     }
     
