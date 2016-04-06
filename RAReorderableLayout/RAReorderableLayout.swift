@@ -78,9 +78,9 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
     
     private var fakeCellCenter: CGPoint?
     
-    public var trigerInsets: UIEdgeInsets = UIEdgeInsetsMake(100.0, 100.0, 100.0, 100.0)
+    public var trigerInsets = UIEdgeInsetsMake(100.0, 100.0, 100.0, 100.0)
     
-    public var trigerPadding: UIEdgeInsets = UIEdgeInsetsZero
+    public var trigerPadding = UIEdgeInsetsZero
     
     public var scrollSpeedValue: CGFloat = 10.0
     
@@ -437,41 +437,23 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
         
         switch gestureRecognizer {
         case longPress:
-            if (collectionView!.panGestureRecognizer.state != .Possible && collectionView!.panGestureRecognizer.state != .Failed) {
-                return false
-            }
+            return !(collectionView!.panGestureRecognizer.state != .Possible && collectionView!.panGestureRecognizer.state != .Failed)
         case panGesture:
-            if (longPress!.state == .Possible || longPress!.state == .Failed) {
-                return false
-            }
+            return !(longPress!.state == .Possible || longPress!.state == .Failed)
         default:
             return true
         }
-
-        return true
     }
     
     public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         switch gestureRecognizer {
-        case longPress:
-            if otherGestureRecognizer.isEqual(panGesture) {
-                return true
-            }
         case panGesture:
-            if otherGestureRecognizer.isEqual(longPress) {
-                return true
-            }else {
-                return false
-            }
+            return otherGestureRecognizer == longPress
         case collectionView?.panGestureRecognizer:
-            if (longPress!.state != .Possible || longPress!.state != .Failed) {
-                return false
-            }
+            return (longPress!.state != .Possible || longPress!.state != .Failed)
         default:
             return true
         }
-
-        return true
     }
 }
 
@@ -588,7 +570,6 @@ private class RACellFakeView: UIView {
 }
 
 // Convenience method
-func ~= (obj:NSObjectProtocol?, r:UIGestureRecognizer) -> Bool
-{
+private func ~= (obj:NSObjectProtocol?, r:UIGestureRecognizer) -> Bool {
     return r.isEqual(obj)
 }
