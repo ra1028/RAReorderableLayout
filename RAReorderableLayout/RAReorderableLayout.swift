@@ -504,7 +504,7 @@ private class RACellFakeView: UIView {
     }
     
     func changeBoundsIfNeeded(bounds: CGRect) {
-        if CGRectEqualToRect(bounds, bounds) { return }
+        if CGRectEqualToRect(self.bounds, bounds) { return }
         
         UIView.animateWithDuration(
             0.3,
