@@ -59,8 +59,8 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
         set { collectionView?.delegate = delegate }
     }
     
-    public weak var datasource: RAReorderableLayoutDataSource? {
-        set { collectionView?.dataSource = datasource }
+    public weak var dataSource: RAReorderableLayoutDataSource? {
+        set { collectionView?.dataSource = dataSource }
         get { return collectionView?.dataSource as? RAReorderableLayoutDataSource }
     }
     
@@ -157,17 +157,17 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
         super.prepareLayout()
         
         // scroll trigger insets
-        if let insets = datasource?.scrollTrigerEdgeInsetsInCollectionView?(self.collectionView!) {
+        if let insets = dataSource?.scrollTrigerEdgeInsetsInCollectionView?(self.collectionView!) {
             trigerInsets = insets
         }
         
         // scroll trier padding
-        if let padding = datasource?.scrollTrigerPaddingInCollectionView?(self.collectionView!) {
+        if let padding = dataSource?.scrollTrigerPaddingInCollectionView?(self.collectionView!) {
             trigerPadding = padding
         }
         
         // scroll speed value
-        if let speed = datasource?.scrollSpeedValueInCollectionView?(collectionView!) {
+        if let speed = dataSource?.scrollSpeedValueInCollectionView?(collectionView!) {
             scrollSpeedValue = speed
         }
     }
@@ -181,7 +181,7 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
             $0.indexPath.isEqual(cellFakeView?.indexPath)
         }.forEach {
             // reordering cell alpha
-            $0.alpha = datasource?.collectionView?(collectionView!, reorderingItemAlphaInSection: $0.indexPath.section) ?? 0
+            $0.alpha = dataSource?.collectionView?(collectionView!, reorderingItemAlphaInSection: $0.indexPath.section) ?? 0
         }
 
         return attributesArray
