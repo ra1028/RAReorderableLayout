@@ -60,7 +60,7 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
     }
     
     public weak var datasource: RAReorderableLayoutDataSource? {
-        set { collectionView?.delegate = delegate }
+        set { collectionView?.dataSource = datasource }
         get { return collectionView?.dataSource as? RAReorderableLayoutDataSource }
     }
     
