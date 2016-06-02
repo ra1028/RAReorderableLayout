@@ -231,10 +231,35 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
     
     // move item
     private func moveItemIfNeeded() {
-        guard let fakeCell = cellFakeView,
-            atIndexPath = fakeCell.indexPath,
-            toIndexPath = collectionView!.indexPathForItemAtPoint(fakeCell.center) else {
-                return
+        guard let fakeCell = cellFakeView, atIndexPath = fakeCell.indexPath else {
+            return
+        }
+        
+        var possibleToIndexPath = collectionView!.indexPathForItemAtPoint(fakeCell.center)
+        if possibleToIndexPath == nil {
+            let numSections = collectionView?.numberOfSections() ?? 0
+            for i in 1..<numSections - 1 {
+                let indexPath = NSIndexPath(forItem: 0, inSection: i)
+                var framesToTest: [CGRect] = []
+                if let headerLayoutAttributes = collectionView!.layoutAttributesForSupplementaryElementOfKind(UICollectionElementKindSectionHeader, atIndexPath: indexPath) {
+                    framesToTest.append(headerLayoutAttributes.frame)
+                }
+                
+                if let footerLayoutAttributes = collectionView!.layoutAttributesForSupplementaryElementOfKind(UICollectionElementKindSectionFooter, atIndexPath: indexPath) {
+                    framesToTest.append(footerLayoutAttributes.frame)
+                }
+                
+                for frame in framesToTest {
+                    if CGRectContainsPoint(frame, fakeCell.center) && indexPath.section != atIndexPath.section {
+                        possibleToIndexPath = indexPath
+                        break
+                    }
+                }
+            }
+        }
+        
+        guard let toIndexPath = possibleToIndexPath else {
+            return
         }
         
         guard !atIndexPath.isEqual(toIndexPath) else { return }
