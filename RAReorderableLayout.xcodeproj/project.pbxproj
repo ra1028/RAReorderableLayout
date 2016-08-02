@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DFF5E7531B8F05CE003726B0 /* RAReorderableLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = DFF5E7521B8F05CE003726B0 /* RAReorderableLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DFF5E75B1B8F061B003726B0 /* RAReorderableLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF5E75A1B8F061B003726B0 /* RAReorderableLayout.swift */; settings = {ASSET_TAGS = (); }; };
+		DFF5E75B1B8F061B003726B0 /* RAReorderableLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF5E75A1B8F061B003726B0 /* RAReorderableLayout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,6 +99,7 @@
 				TargetAttributes = {
 					DFF5E74E1B8F05CE003726B0 = {
 						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -245,6 +246,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -262,6 +264,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.yo-woo.RAReorderableLayout";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
