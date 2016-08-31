@@ -565,7 +565,7 @@ private class RACellFakeView: UIView {
         defer { UIGraphicsEndImageContext() }
 
         cell!.drawViewHierarchyInRect(cell!.bounds, afterScreenUpdates: true)
-        return UIGraphicsGetImageFromCurrentImageContext()
+        return UIGraphicsGetImageFromCurrentImageContext()!
     }
 }
 
