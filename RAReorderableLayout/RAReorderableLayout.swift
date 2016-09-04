@@ -322,6 +322,7 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
     // gesture recognizers
     private func setUpGestureRecognizers() {
         guard let collectionView = collectionView else { return }
+        guard longPress == nil && panGesture == nil else {return }
         
         longPress = UILongPressGestureRecognizer(target: self, action: #selector(RAReorderableLayout.handleLongPress(_:)))
         panGesture = UIPanGestureRecognizer(target: self, action: #selector(RAReorderableLayout.handlePanGesture(_:)))
