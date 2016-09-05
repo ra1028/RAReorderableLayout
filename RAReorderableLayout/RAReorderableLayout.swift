@@ -111,7 +111,7 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
     
     public var trigerInsets = UIEdgeInsetsMake(100.0, 100.0, 100.0, 100.0)
     
-    public var trigerPadding = UIEdgeInsetsZero
+    public var trigerPadding = UIEdgeInsets.zero
     
     public var scrollSpeedValue: CGFloat = 10.0
     
@@ -512,7 +512,7 @@ private class RACellFakeView: UIView {
         
         self.cell = cell
         
-        layer.shadowColor = UIColor.black().cgColor
+        layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: 0, height: 0)
         layer.shadowOpacity = 0
         layer.shadowRadius = 5.0
@@ -593,7 +593,7 @@ private class RACellFakeView: UIView {
     }
     
     private func getCellImage() -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(cell!.bounds.size, false, UIScreen.main().scale * 2)
+        UIGraphicsBeginImageContextWithOptions(cell!.bounds.size, false, UIScreen.main.scale * 2)
         defer { UIGraphicsEndImageContext() }
 
         cell!.drawHierarchy(in: cell!.bounds, afterScreenUpdates: true)

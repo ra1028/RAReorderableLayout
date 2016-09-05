@@ -43,7 +43,7 @@ class VerticalViewController: UIViewController, RAReorderableLayoutDelegate, RAR
     // RAReorderableLayout delegate datasource
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let screenWidth = UIScreen.main().bounds.width
+        let screenWidth = UIScreen.main.bounds.width
         let threePiecesWidth = floor(screenWidth / 3.0 - ((2.0 / 3) * 2))
         let twoPiecesWidth = floor(screenWidth / 2.0 - (2.0 / 2))
         if (indexPath as NSIndexPath).section == 0 {
@@ -174,7 +174,7 @@ class RACollectionViewCell: UICollectionViewCell {
         gradientLayer!.frame = gradientView.bounds
         
         let mainColor = UIColor(white: 0, alpha: 0.3).cgColor
-        let subColor = UIColor.clear().cgColor
+        let subColor = UIColor.clear.cgColor
         gradientLayer!.colors = [subColor, mainColor]
         gradientLayer!.locations = [0, 1]
         

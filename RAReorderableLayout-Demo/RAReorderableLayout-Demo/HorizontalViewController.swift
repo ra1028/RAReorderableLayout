@@ -49,7 +49,7 @@ class HorizontalViewController: UIViewController, RAReorderableLayoutDelegate, R
         gradientLayer = CAGradientLayer()
         gradientLayer!.frame = gradientView.bounds
         let mainColor = UIColor(white: 0, alpha: 0.3).cgColor
-        let subColor = UIColor.clear().cgColor
+        let subColor = UIColor.clear.cgColor
         gradientLayer!.colors = [subColor, mainColor]
         gradientLayer!.locations = [0, 1]
         gradientView.layer.insertSublayer(gradientLayer!, at: 0)
@@ -138,26 +138,26 @@ class BookCell: UICollectionViewCell {
     
     private func configure() {
         backCoverView = UIView(frame: bounds)
-        backCoverView.backgroundColor = getDarkColor(UIColor.red(), minusValue: 20.0)
+        backCoverView.backgroundColor = getDarkColor(UIColor.red, minusValue: 20.0)
         backCoverView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         pagesView = UIView(frame: CGRect(x: 15.0, y: 0, width: bounds.width - 25.0, height: bounds.height - 5.0))
-        pagesView.backgroundColor = UIColor.white()
+        pagesView.backgroundColor = UIColor.white
         pagesView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         frontCoverView = UIView(frame: CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height - 10.0))
-        frontCoverView.backgroundColor = UIColor.red()
+        frontCoverView.backgroundColor = UIColor.red
         frontCoverView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         bindingView = UIView(frame: CGRect(x: 0, y: 0, width: 15.0, height: bounds.height))
         bindingView.backgroundColor = getDarkColor(backCoverView?.backgroundColor, minusValue: 50.0)
         bindingView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         bindingView.layer.borderWidth = 1.0
-        bindingView.layer.borderColor = UIColor.black().cgColor
+        bindingView.layer.borderColor = UIColor.black.cgColor
         
         titleLabel = UILabel(frame: CGRect(x: 15.0, y: 30.0, width: bounds.width - 16.0, height: 30.0))
         titleLabel.backgroundColor = UIColor(white: 1.0, alpha: 0.8)
-        titleLabel.textColor = UIColor.black()
+        titleLabel.textColor = UIColor.black
         titleLabel.textAlignment = .center
         titleLabel.font = UIFont.boldSystemFont(ofSize: 20.0)
         
@@ -174,8 +174,8 @@ class BookCell: UICollectionViewCell {
         let backLineLayer = CAShapeLayer()
         backLineLayer.frame = backCoverView!.bounds
         backLineLayer.path = backPath.cgPath
-        backLineLayer.strokeColor = UIColor.black().cgColor
-        backLineLayer.fillColor = UIColor.clear().cgColor
+        backLineLayer.strokeColor = UIColor.black.cgColor
+        backLineLayer.fillColor = UIColor.clear.cgColor
         backLineLayer.lineWidth = 2.0
         backCoverView!.layer.mask = backMask
         backCoverView!.layer.insertSublayer(backLineLayer, at: 0)
@@ -186,8 +186,8 @@ class BookCell: UICollectionViewCell {
         frontMask.path = frontPath.cgPath
         let frontLineLayer = CAShapeLayer()
         frontLineLayer.path = frontPath.cgPath
-        frontLineLayer.strokeColor = UIColor.black().cgColor
-        frontLineLayer.fillColor = UIColor.clear().cgColor
+        frontLineLayer.strokeColor = UIColor.black.cgColor
+        frontLineLayer.fillColor = UIColor.clear.cgColor
         frontLineLayer.lineWidth = 2.0
         frontCoverView!.layer.mask = frontMask
         frontCoverView!.layer.insertSublayer(frontLineLayer, at: 0)
