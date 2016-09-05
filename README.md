@@ -12,15 +12,25 @@ RAReorderableLayout
 ## Animation
 ![animated gif](https://github.com/ra1028/RAReorderableLayout/raw/master/Assets/animation.gif)
 
+## Requirements
+- Swift 2.3 / Xcode 8
+OS X 10.9 or later
+iOS 8.0 or later
+watchOS 2.0 or later
+tvOS 9.0 or later
 
 ## Installation
-__iOS8__  
+__iOS8 or later__  
 
 ### CocoaPods
 ```ruby
 # Podfile  
 use_frameworks!  
-pod "RAReorderableLayout"  
+
+target 'YOUR_TARGET_NAME' do
+  pod 'RAReorderableLayout'
+end
+
 ```
 ### Carthage
 ```ruby

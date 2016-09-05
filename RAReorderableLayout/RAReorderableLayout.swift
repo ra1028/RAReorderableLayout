@@ -354,6 +354,7 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
     // gesture recognizers
     private func setUpGestureRecognizers() {
         guard let collectionView = collectionView else { return }
+        guard longPress == nil && panGesture == nil else {return }
         
         longPress = UILongPressGestureRecognizer(target: self, action: #selector(RAReorderableLayout.handleLongPress(_:)))
         panGesture = UIPanGestureRecognizer(target: self, action: #selector(RAReorderableLayout.handlePanGesture(_:)))
@@ -595,8 +596,8 @@ private class RACellFakeView: UIView {
     private func getCellImage() -> UIImage {
         UIGraphicsBeginImageContextWithOptions(cell!.bounds.size, false, UIScreen.main.scale * 2)
         defer { UIGraphicsEndImageContext() }
-
         cell!.drawHierarchy(in: cell!.bounds, afterScreenUpdates: true)
+
         return UIGraphicsGetImageFromCurrentImageContext()!
     }
 }

@@ -94,7 +94,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Yowoo Technology Inc.";
 				TargetAttributes = {
 					DFF5E74E1B8F05CE003726B0 = {
