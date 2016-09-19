@@ -246,19 +246,18 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
         
         // will move item
         delegate?.collectionView?(collectionView!, atIndexPath: atIndexPath, willMoveToIndexPath: toIndexPath)
+       
+        fakeCell.indexPath = toIndexPath
+        
+        self.collectionView!.moveItemAtIndexPath(atIndexPath, toIndexPath: toIndexPath)
         
         let attribute = self.layoutAttributesForItemAtIndexPath(toIndexPath)!
-        collectionView!.performBatchUpdates({
-            fakeCell.indexPath = toIndexPath
-            fakeCell.cellFrame = attribute.frame
-            fakeCell.changeBoundsIfNeeded(attribute.bounds)
-            
-            self.collectionView!.deleteItemsAtIndexPaths([atIndexPath])
-            self.collectionView!.insertItemsAtIndexPaths([toIndexPath])
-            
-            // did move item
-            self.delegate?.collectionView?(self.collectionView!, atIndexPath: atIndexPath, didMoveToIndexPath: toIndexPath)
-            }, completion:nil)
+        fakeCell.cellFrame = attribute.frame
+        fakeCell.changeBoundsIfNeeded(attribute.bounds)
+        
+        // did move item
+        self.delegate?.collectionView?(self.collectionView!, atIndexPath: atIndexPath, didMoveToIndexPath: toIndexPath)
+        
     }
     
     internal func continuousScroll() {
