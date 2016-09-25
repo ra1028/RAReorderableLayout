@@ -109,11 +109,11 @@ open class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerD
     
     fileprivate var fakeCellCenter: CGPoint?
     
-    open var trigerInsets = UIEdgeInsetsMake(100.0, 100.0, 100.0, 100.0)
+    fileprivate var trigerInsets = UIEdgeInsetsMake(100.0, 100.0, 100.0, 100.0)
     
-    open var trigerPadding = UIEdgeInsets.zero
+    fileprivate var trigerPadding = UIEdgeInsets.zero
     
-    open var scrollSpeedValue: CGFloat = 10.0
+    fileprivate var scrollSpeedValue: CGFloat = 10.0
     
     fileprivate var offsetFromTop: CGFloat {
         let contentOffset = collectionView!.contentOffset
