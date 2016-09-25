@@ -10,15 +10,10 @@ import UIKit
 
 
 class HorizontalViewController: UIViewController, RAReorderableLayoutDelegate, RAReorderableLayoutDataSource {
-    
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var gradientView: UIView!
     private var gradientLayer: CAGradientLayer?
     private var books: [Book] = []
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,14 +24,18 @@ class HorizontalViewController: UIViewController, RAReorderableLayoutDelegate, R
         (collectionView.collectionViewLayout as! RAReorderableLayout).scrollDirection = .horizontal
         applyGradation()
         
-        let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        for (index, _) in alphabet.characters.enumerated() {
-            let charIndex = alphabet.characters.index(alphabet.startIndex, offsetBy: index)
-            var title = "BOOK "
-            title += alphabet.substring(with: charIndex..<charIndex)
-            let color = UIColor(hue: 255.0 / 26.0 * CGFloat(index) / 255.0, saturation: 1.0, brightness: 0.9, alpha: 1.0)
-            let book = Book(title: title, color: color)
-            books.append(book)
+        let aScalars = "A".unicodeScalars
+        let zScalars = "Z".unicodeScalars
+        let aAsciiCode = aScalars[aScalars.startIndex].value
+        let zAsciiCode = zScalars[zScalars.startIndex].value
+        books = (aAsciiCode...zAsciiCode)
+            .flatMap(UnicodeScalar.init)
+            .map(Character.init)
+            .enumerated()
+            .map {
+                let title = "Book \(String($1))"
+                let color = UIColor(hue: 255.0 / 26.0 * CGFloat($0) / 255.0, saturation: 1.0, brightness: 0.9, alpha: 1.0)
+                return .init(title: title, color: color)
         }
     }
     

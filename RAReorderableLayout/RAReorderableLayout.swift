@@ -13,13 +13,13 @@ extension RAReorderableLayoutDataSource {
         return 0
     }
     func scrollTrigerEdgeInsetsInCollectionView(_ collectionView: UICollectionView) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        return .init(top: 100, left: 100, bottom: 100, right: 100)
     }
     func scrollTrigerPaddingInCollectionView(_ collectionView: UICollectionView) -> UIEdgeInsets {
-        return  UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        return  .zero
     }
     func scrollSpeedValueInCollectionView(_ collectionView: UICollectionView) -> CGFloat {
-        return 0
+        return 10
     }
 }
 
@@ -62,19 +62,19 @@ protocol RAReorderableLayoutDataSource: UICollectionViewDataSource {
     func scrollSpeedValueInCollectionView(_ collectionView: UICollectionView) -> CGFloat
 }
 
-public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelegate {
+open class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelegate {
     
-    private enum direction {
+    fileprivate enum direction {
         case toTop
         case toEnd
         case stay
         
-        private func scrollValue(speedValue: CGFloat, percentage: CGFloat) -> CGFloat {
+        fileprivate func scrollValue(_ speedValue: CGFloat, percentage: CGFloat) -> CGFloat {
             var value: CGFloat = 0.0
             switch self {
-            case toTop:
+            case .toTop:
                 value = -speedValue
-            case toEnd:
+            case .toEnd:
                 value = speedValue
             case .stay:
                 return 0
@@ -95,78 +95,78 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
         get { return collectionView?.dataSource as? RAReorderableLayoutDataSource }
     }
     
-    private var displayLink: CADisplayLink?
+    fileprivate var displayLink: CADisplayLink?
     
-    private var longPress: UILongPressGestureRecognizer?
+    fileprivate var longPress: UILongPressGestureRecognizer?
     
-    private var panGesture: UIPanGestureRecognizer?
+    fileprivate var panGesture: UIPanGestureRecognizer?
     
-    private var continuousScrollDirection: direction = .stay
+    fileprivate var continuousScrollDirection: direction = .stay
     
-    private var cellFakeView: RACellFakeView?
+    fileprivate var cellFakeView: RACellFakeView?
     
-    private var panTranslation: CGPoint?
+    fileprivate var panTranslation: CGPoint?
     
-    private var fakeCellCenter: CGPoint?
+    fileprivate var fakeCellCenter: CGPoint?
     
-    public var trigerInsets = UIEdgeInsetsMake(100.0, 100.0, 100.0, 100.0)
+    open var trigerInsets = UIEdgeInsetsMake(100.0, 100.0, 100.0, 100.0)
     
-    public var trigerPadding = UIEdgeInsets.zero
+    open var trigerPadding = UIEdgeInsets.zero
     
-    public var scrollSpeedValue: CGFloat = 10.0
+    open var scrollSpeedValue: CGFloat = 10.0
     
-    private var offsetFromTop: CGFloat {
+    fileprivate var offsetFromTop: CGFloat {
         let contentOffset = collectionView!.contentOffset
         return scrollDirection == .vertical ? contentOffset.y : contentOffset.x
     }
     
-    private var insetsTop: CGFloat {
+    fileprivate var insetsTop: CGFloat {
         let contentInsets = collectionView!.contentInset
         return scrollDirection == .vertical ? contentInsets.top : contentInsets.left
     }
     
-    private var insetsEnd: CGFloat {
+    fileprivate var insetsEnd: CGFloat {
         let contentInsets = collectionView!.contentInset
         return scrollDirection == .vertical ? contentInsets.bottom : contentInsets.right
     }
     
-    private var contentLength: CGFloat {
+    fileprivate var contentLength: CGFloat {
         let contentSize = collectionView!.contentSize
         return scrollDirection == .vertical ? contentSize.height : contentSize.width
     }
     
-    private var collectionViewLength: CGFloat {
+    fileprivate var collectionViewLength: CGFloat {
         let collectionViewSize = collectionView!.bounds.size
         return scrollDirection == .vertical ? collectionViewSize.height : collectionViewSize.width
     }
     
-    private var fakeCellTopEdge: CGFloat? {
+    fileprivate var fakeCellTopEdge: CGFloat? {
         if let fakeCell = cellFakeView {
             return scrollDirection == .vertical ? fakeCell.frame.minY : fakeCell.frame.minX
         }
         return nil
     }
     
-    private var fakeCellEndEdge: CGFloat? {
+    fileprivate var fakeCellEndEdge: CGFloat? {
         if let fakeCell = cellFakeView {
             return scrollDirection == .vertical ? fakeCell.frame.maxY : fakeCell.frame.maxX
         }
         return nil
     }
     
-    private var triggerInsetTop: CGFloat {
+    fileprivate var triggerInsetTop: CGFloat {
         return scrollDirection == .vertical ? trigerInsets.top : trigerInsets.left
     }
     
-    private var triggerInsetEnd: CGFloat {
+    fileprivate var triggerInsetEnd: CGFloat {
         return scrollDirection == .vertical ? trigerInsets.top : trigerInsets.left
     }
     
-    private var triggerPaddingTop: CGFloat {
+    fileprivate var triggerPaddingTop: CGFloat {
         return scrollDirection == .vertical ? trigerPadding.top : trigerPadding.left
     }
     
-    private var triggerPaddingEnd: CGFloat {
+    fileprivate var triggerPaddingEnd: CGFloat {
         return scrollDirection == .vertical ? trigerPadding.bottom : trigerPadding.right
     }
     
@@ -184,7 +184,7 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
         removeObserver(self, forKeyPath: "collectionView")
     }
     
-    override public func prepare() {
+    override open func prepare() {
         super.prepare()
         
         // scroll trigger insets
@@ -203,7 +203,7 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
         }
     }
     
-    override public func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+    override open func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         guard let attributesArray = super.layoutAttributesForElements(in: rect) else { return nil }
 
         attributesArray.filter {
@@ -219,7 +219,7 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
         return attributesArray
     }
     
-    public override func observeValue(forKeyPath keyPath: String?, of object: AnyObject?, change: [NSKeyValueChangeKey : AnyObject]?, context: UnsafeMutablePointer<Void>?) {
+    open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "collectionView" {
             setUpGestureRecognizers()
         }else {
@@ -227,11 +227,11 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
         }
     }
     
-    private func configureObserver() {
+    fileprivate func configureObserver() {
         addObserver(self, forKeyPath: "collectionView", options: [], context: nil)
     }
     
-    private func setUpDisplayLink() {
+    fileprivate func setUpDisplayLink() {
         guard displayLink == nil else {
             return
         }
@@ -240,20 +240,20 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
         displayLink!.add(to: RunLoop.main, forMode: RunLoopMode.commonModes)
     }
     
-    private func invalidateDisplayLink() {
+    fileprivate func invalidateDisplayLink() {
         continuousScrollDirection = .stay
         displayLink?.invalidate()
         displayLink = nil
     }
     
     // begein scroll
-    private func beginScrollIfNeeded() {
+    fileprivate func beginScrollIfNeeded() {
         if cellFakeView == nil { return }
         
-        if  fakeCellTopEdge <= offsetFromTop + triggerPaddingTop + triggerInsetTop {
+        if fakeCellTopEdge! <= offsetFromTop + triggerPaddingTop + triggerInsetTop {
             continuousScrollDirection = .toTop
             setUpDisplayLink()
-        } else if fakeCellEndEdge >= offsetFromTop + collectionViewLength - triggerPaddingEnd - triggerInsetEnd {
+        } else if fakeCellEndEdge! >= offsetFromTop + collectionViewLength - triggerPaddingEnd - triggerInsetEnd {
             continuousScrollDirection = .toEnd
             setUpDisplayLink()
         } else {
@@ -262,17 +262,17 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
     }
     
     // move item
-    private func moveItemIfNeeded() {
+    fileprivate func moveItemIfNeeded() {
         guard let fakeCell = cellFakeView,
-            atIndexPath = fakeCell.indexPath,
-            toIndexPath = collectionView!.indexPathForItem(at: fakeCell.center) else {
+            let atIndexPath = fakeCell.indexPath,
+            let toIndexPath = collectionView!.indexPathForItem(at: fakeCell.center) else {
                 return
         }
         
         guard atIndexPath != toIndexPath else { return }
         
         // can move item
-        if let canMove = delegate?.collectionView(collectionView!, at: atIndexPath, canMoveTo: toIndexPath) where !canMove {
+        if let canMove = delegate?.collectionView(collectionView!, at: atIndexPath, canMoveTo: toIndexPath) , !canMove {
             return
         }
         
@@ -297,7 +297,7 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
         guard let fakeCell = cellFakeView else { return }
         
         let percentage = calcTriggerPercentage()
-        var scrollRate = continuousScrollDirection.scrollValue(speedValue: self.scrollSpeedValue, percentage: percentage)
+        var scrollRate = continuousScrollDirection.scrollValue(self.scrollSpeedValue, percentage: percentage)
         
         let offset = offsetFromTop
         let length = collectionViewLength
@@ -317,7 +317,7 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
                 self.fakeCellCenter?.y += scrollRate
                 fakeCell.center.y = self.fakeCellCenter!.y + self.panTranslation!.y
                 self.collectionView?.contentOffset.y += scrollRate
-            }else {
+            } else {
                 self.fakeCellCenter?.x += scrollRate
                 fakeCell.center.x = self.fakeCellCenter!.x + self.panTranslation!.x
                 self.collectionView?.contentOffset.x += scrollRate
@@ -327,7 +327,7 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
         moveItemIfNeeded()
     }
     
-    private func calcTriggerPercentage() -> CGFloat {
+    fileprivate func calcTriggerPercentage() -> CGFloat {
         guard cellFakeView != nil else { return 0 }
         
         let offset = offsetFromTop
@@ -352,7 +352,7 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
     }
     
     // gesture recognizers
-    private func setUpGestureRecognizers() {
+    fileprivate func setUpGestureRecognizers() {
         guard let collectionView = collectionView else { return }
         guard longPress == nil && panGesture == nil else {return }
         
@@ -361,21 +361,21 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
         longPress?.delegate = self
         panGesture?.delegate = self
         panGesture?.maximumNumberOfTouches = 1
-        let gestures: NSArray! = collectionView.gestureRecognizers
+        let gestures: NSArray! = collectionView.gestureRecognizers as NSArray!
         gestures.enumerateObjects(options: []) { gestureRecognizer, index, finish in
             if gestureRecognizer is UILongPressGestureRecognizer {
-                gestureRecognizer.require(toFail: self.longPress!)
+                (gestureRecognizer as AnyObject).require(toFail: self.longPress!)
             }
             collectionView.addGestureRecognizer(self.longPress!)
             collectionView.addGestureRecognizer(self.panGesture!)
             }
         }
     
-    public func cancelDrag() {
+    open func cancelDrag() {
         cancelDrag(nil)
     }
     
-    private func cancelDrag(_ toIndexPath: IndexPath!) {
+    fileprivate func cancelDrag(_ toIndexPath: IndexPath!) {
         guard cellFakeView != nil else { return }
         
         // will end drag item
@@ -425,7 +425,7 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
             fakeCellCenter = cellFakeView!.center
             
             invalidateLayout()
-            
+
             cellFakeView?.pushFowardView()
             
             // did begin drag item
@@ -442,8 +442,8 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
     func handlePanGesture(_ pan: UIPanGestureRecognizer!) {
         panTranslation = pan.translation(in: collectionView!)
         if let cellFakeView = cellFakeView,
-            fakeCellCenter = fakeCellCenter,
-            panTranslation = panTranslation {
+            let fakeCellCenter = fakeCellCenter,
+            let panTranslation = panTranslation {
             switch pan.state {
             case .changed:
                 cellFakeView.center.x = fakeCellCenter.x + panTranslation.x
@@ -460,10 +460,10 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
     }
     
     // gesture recognize delegate
-    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+    open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         // allow move item
         let location = gestureRecognizer.location(in: collectionView)
-        if let indexPath = collectionView?.indexPathForItem(at: location) where
+        if let indexPath = collectionView?.indexPathForItem(at: location) ,
             delegate?.collectionView(self.collectionView!, allowMoveAt: indexPath) == false {
             return false
         }
@@ -478,7 +478,7 @@ public class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognize
         }
     }
     
-    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    open func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         switch gestureRecognizer {
         case panGesture:
             return otherGestureRecognizer == longPress
@@ -498,11 +498,11 @@ private class RACellFakeView: UIView {
     
     var cellFakeHightedView: UIImageView?
     
-    private var indexPath: IndexPath?
+    fileprivate var indexPath: IndexPath?
     
-    private var originalCenter: CGPoint?
+    fileprivate var originalCenter: CGPoint?
     
-    private var cellFrame: CGRect?
+    fileprivate var cellFrame: CGRect?
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -593,7 +593,7 @@ private class RACellFakeView: UIView {
         )
     }
     
-    private func getCellImage() -> UIImage {
+    fileprivate func getCellImage() -> UIImage {
         UIGraphicsBeginImageContextWithOptions(cell!.bounds.size, false, UIScreen.main.scale * 2)
         defer { UIGraphicsEndImageContext() }
         cell!.drawHierarchy(in: cell!.bounds, afterScreenUpdates: true)
