@@ -88,8 +88,8 @@ class HorizontalViewController: UIViewController, RAReorderableLayoutDelegate, R
     }
     
     func collectionView(_ collectionView: UICollectionView, at: IndexPath, didMoveTo toIndexPath: IndexPath) {
-        let book = books.remove(at: (toIndexPath as NSIndexPath).item)
-        books.insert(book, at: (toIndexPath as NSIndexPath).item)
+        let book = books.remove(at: at.item)
+        books.insert(book, at: toIndexPath.item)
     }
     
     func scrollTrigerEdgeInsetsInCollectionView(_ collectionView: UICollectionView) -> UIEdgeInsets {
