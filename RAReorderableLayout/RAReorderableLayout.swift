@@ -94,6 +94,8 @@ open class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerD
         get { return collectionView?.dataSource as? RAReorderableLayoutDataSource }
     }
     
+    open var draggable: Bool = true
+    
     fileprivate var displayLink: CADisplayLink?
     
     fileprivate var longPress: UILongPressGestureRecognizer?
@@ -409,6 +411,8 @@ open class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerD
         
         switch longPress.state {
         case .began:
+            if !draggable { return }
+            
             // will begin drag item
             delegate?.collectionView(self.collectionView!, collectionView: self, willBeginDraggingItemAt: indexPath!)
             collectionView?.scrollsToTop = false
