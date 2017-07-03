@@ -220,8 +220,14 @@ open class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerD
     
     open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "collectionView" {
-            setUpGestureRecognizers()
-        }else {
+
+            if let _ = collectionView {
+                setUpGestureRecognizers()
+            } else {
+                removeGestureRecognizers()
+            }
+
+        } else {
             super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
         }
     }
@@ -369,6 +375,19 @@ open class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerD
             collectionView.addGestureRecognizer(self.panGesture!)
             }
         }
+
+    fileprivate func removeGestureRecognizers() {
+
+        if let longPress = longPress {
+            longPress.view?.removeGestureRecognizer(longPress)
+            self.longPress = nil
+        }
+
+        if let panGesture = panGesture {
+            panGesture.view?.removeGestureRecognizer(panGesture)
+            self.panGesture = nil
+        }
+    }
     
     open func cancelDrag() {
         cancelDrag(nil)
