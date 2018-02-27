@@ -292,7 +292,7 @@ open class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerD
             }, completion:nil)
     }
     
-    internal func continuousScroll() {
+    @objc internal func continuousScroll() {
         guard let fakeCell = cellFakeView else { return }
         
         let percentage = calcTriggerPercentage()
@@ -397,7 +397,7 @@ open class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerD
     }
     
     // long press gesture
-    internal func handleLongPress(_ longPress: UILongPressGestureRecognizer!) {
+    @objc internal func handleLongPress(_ longPress: UILongPressGestureRecognizer!) {
         let location = longPress.location(in: collectionView)
         var indexPath: IndexPath? = collectionView?.indexPathForItem(at: location)
         
@@ -438,7 +438,7 @@ open class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerD
     }
     
     // pan gesture
-    func handlePanGesture(_ pan: UIPanGestureRecognizer!) {
+    @objc func handlePanGesture(_ pan: UIPanGestureRecognizer!) {
         panTranslation = pan.translation(in: collectionView!)
         if let cellFakeView = cellFakeView,
             let fakeCellCenter = fakeCellCenter,
