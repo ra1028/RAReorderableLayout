@@ -13,7 +13,7 @@ RAReorderableLayout
 ![animated gif](https://github.com/ra1028/RAReorderableLayout/raw/master/Assets/animation.gif)
 
 ## Requirements
-- Swift 3.0 / Xcode 8  
+- Swift 4.0 / Xcode 9  
 OS X 10.9 or later
 iOS 8.0 or later
 watchOS 2.0 or later
