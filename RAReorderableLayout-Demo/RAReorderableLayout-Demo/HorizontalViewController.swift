@@ -29,7 +29,7 @@ class HorizontalViewController: UIViewController, RAReorderableLayoutDelegate, R
         let aAsciiCode = aScalars[aScalars.startIndex].value
         let zAsciiCode = zScalars[zScalars.startIndex].value
         books = (aAsciiCode...zAsciiCode)
-            .flatMap(UnicodeScalar.init)
+            .compactMap(UnicodeScalar.init)
             .map(Character.init)
             .enumerated()
             .map {
