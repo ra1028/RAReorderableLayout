@@ -1,8 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="kWz-Ws-i7u">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="kWz-Ws-i7u">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6246"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -10,7 +14,7 @@
             <objects>
                 <navigationController id="kWz-Ws-i7u" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="MOS-5t-eRG">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -30,14 +34,14 @@
                         <viewControllerLayoutGuide type="bottom" id="Dau-Db-F9b"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="xSR-OR-m27">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CNk-UT-7zt">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="301.5"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kpr-EB-OtZ" customClass="RAButton" customModule="RAReorderableLayout_Demo" customModuleProvider="target">
-                                        <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                        <rect key="frame" x="122.5" y="86" width="130" height="130"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="120" id="Ghj-4q-Zfe">
                                                 <variation key="widthClass=compact" constant="130"/>
@@ -48,8 +52,8 @@
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                         <state key="normal" title="Vertical">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <variation key="default">
                                             <mask key="constraints">
@@ -68,7 +72,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="centerX" secondItem="Kpr-EB-OtZ" secondAttribute="centerX" id="BHy-zv-1Ql"/>
                                     <constraint firstAttribute="centerY" secondItem="Kpr-EB-OtZ" secondAttribute="centerY" id="ZeJ-B1-PnH"/>
@@ -93,10 +97,10 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="60n-oT-glw">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="365.5" width="375" height="301.5"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lIx-Ty-mo3" customClass="RAButton" customModule="RAReorderableLayout_Demo" customModuleProvider="target">
-                                        <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                        <rect key="frame" x="122.5" y="86" width="130" height="130"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="120" id="o2p-zZ-vYv">
                                                 <variation key="widthClass=compact" constant="130"/>
@@ -107,8 +111,8 @@
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                         <state key="normal" title="Horizontal">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <variation key="default">
                                             <mask key="constraints">
@@ -127,7 +131,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="centerX" secondItem="lIx-Ty-mo3" secondAttribute="centerX" id="JSW-Fa-App"/>
                                     <constraint firstAttribute="centerY" secondItem="lIx-Ty-mo3" secondAttribute="centerY" id="egu-wl-JHs"/>
@@ -152,7 +156,7 @@
                                 </variation>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="60n-oT-glw" firstAttribute="top" secondItem="CNk-UT-7zt" secondAttribute="bottom" constant="-88" id="2uk-UN-a0Z"/>
                             <constraint firstItem="Dau-Db-F9b" firstAttribute="top" secondItem="60n-oT-glw" secondAttribute="bottom" id="76Y-I2-utW"/>
@@ -174,15 +178,15 @@
                                 <exclude reference="60n-oT-glw"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="ESr-wa-oEq"/>
-                                <exclude reference="LeV-bH-EbJ"/>
-                                <exclude reference="lWI-uG-886"/>
-                                <exclude reference="nYl-aF-XA6"/>
+                                <exclude reference="76Y-I2-utW"/>
                                 <exclude reference="2uk-UN-a0Z"/>
                                 <exclude reference="AsQ-mf-gc2"/>
                                 <exclude reference="uC6-GL-G1Q"/>
                                 <exclude reference="zqg-3J-ara"/>
-                                <exclude reference="76Y-I2-utW"/>
+                                <exclude reference="ESr-wa-oEq"/>
+                                <exclude reference="LeV-bH-EbJ"/>
+                                <exclude reference="lWI-uG-886"/>
+                                <exclude reference="nYl-aF-XA6"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -191,15 +195,15 @@
                                 <include reference="60n-oT-glw"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="ESr-wa-oEq"/>
-                                <include reference="LeV-bH-EbJ"/>
-                                <include reference="lWI-uG-886"/>
-                                <include reference="nYl-aF-XA6"/>
+                                <include reference="76Y-I2-utW"/>
                                 <exclude reference="2uk-UN-a0Z"/>
                                 <include reference="AsQ-mf-gc2"/>
                                 <include reference="uC6-GL-G1Q"/>
                                 <include reference="zqg-3J-ara"/>
-                                <include reference="76Y-I2-utW"/>
+                                <include reference="ESr-wa-oEq"/>
+                                <include reference="LeV-bH-EbJ"/>
+                                <include reference="lWI-uG-886"/>
+                                <include reference="nYl-aF-XA6"/>
                             </mask>
                         </variation>
                     </view>
@@ -222,20 +226,20 @@
                         <viewControllerLayoutGuide type="bottom" id="DBE-zl-vMF"/>
                     </layoutGuides>
                     <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="ie5-fE-tp1">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JVl-HK-v1e">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="183.5" width="375" height="300"/>
                                 <subviews>
                                     <collectionView multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="scv-sT-IPw">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                         <collectionViewLayout key="collectionViewLayout" id="7Sl-a8-FiJ" customClass="RAReorderableLayout" customModule="RAReorderableLayout_Demo" customModuleProvider="target"/>
                                         <cells/>
                                     </collectionView>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="scv-sT-IPw" firstAttribute="top" secondItem="JVl-HK-v1e" secondAttribute="top" id="2t3-gV-cDK"/>
                                     <constraint firstAttribute="height" constant="300" id="5R7-mg-0Yk"/>
@@ -269,7 +273,7 @@
                                 </variation>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="JVl-HK-v1e" secondAttribute="centerX" id="QXt-Ua-prj"/>
                             <constraint firstAttribute="centerY" secondItem="JVl-HK-v1e" secondAttribute="centerY" id="VVR-Nq-uQm"/>
@@ -318,29 +322,28 @@
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Y7k-7W-Nie">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewLayout key="collectionViewLayout" id="ebn-V1-ohc" customClass="RAReorderableLayout" customModule="RAReorderableLayout_Demo" customModuleProvider="target"/>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="verticalCell" reuseIdentifier="verticalCell" id="ab1-xM-oiH" customClass="RACollectionViewCell" customModule="RAReorderableLayout_Demo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <size key="customSize" width="100" height="100"/>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Y7k-7W-Nie" secondAttribute="trailing" id="AYg-ww-TYW"/>
                             <constraint firstAttribute="trailing" secondItem="Y7k-7W-Nie" secondAttribute="trailing" id="Hsm-tp-KSw"/>

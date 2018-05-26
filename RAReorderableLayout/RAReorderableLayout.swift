@@ -292,7 +292,7 @@ open class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerD
             }, completion:nil)
     }
     
-    internal func continuousScroll() {
+    @objc internal func continuousScroll() {
         guard let fakeCell = cellFakeView else { return }
         
         let percentage = calcTriggerPercentage()
@@ -360,15 +360,17 @@ open class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerD
         longPress?.delegate = self
         panGesture?.delegate = self
         panGesture?.maximumNumberOfTouches = 1
-        let gestures: NSArray! = collectionView.gestureRecognizers as NSArray!
-        gestures.enumerateObjects(options: []) { gestureRecognizer, index, finish in
+        guard let gestures = collectionView.gestureRecognizers else {
+            return
+        }
+        gestures.forEach { gestureRecognizer in
             if gestureRecognizer is UILongPressGestureRecognizer {
                 (gestureRecognizer as AnyObject).require(toFail: self.longPress!)
             }
             collectionView.addGestureRecognizer(self.longPress!)
             collectionView.addGestureRecognizer(self.panGesture!)
-            }
         }
+    }
     
     open func cancelDrag() {
         cancelDrag(nil)
@@ -397,7 +399,7 @@ open class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerD
     }
     
     // long press gesture
-    internal func handleLongPress(_ longPress: UILongPressGestureRecognizer!) {
+    @objc internal func handleLongPress(_ longPress: UILongPressGestureRecognizer!) {
         let location = longPress.location(in: collectionView)
         var indexPath: IndexPath? = collectionView?.indexPathForItem(at: location)
         
@@ -438,7 +440,7 @@ open class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerD
     }
     
     // pan gesture
-    func handlePanGesture(_ pan: UIPanGestureRecognizer!) {
+    @objc func handlePanGesture(_ pan: UIPanGestureRecognizer!) {
         panTranslation = pan.translation(in: collectionView!)
         if let cellFakeView = cellFakeView,
             let fakeCellCenter = fakeCellCenter,
