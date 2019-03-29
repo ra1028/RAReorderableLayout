@@ -33,11 +33,11 @@ class ViewController: UIViewController {
         let color2: UIColor = UIColor(red: num3, green: num2, blue: num1, alpha: 1.0)
         
         if (num1 + num2 + num3) / 3.0 >= 0.5 {
-            verticalButton.setTitleColor(UIColor.black, for: UIControlState())
-            horizontalButton.setTitleColor(UIColor.black, for: UIControlState())
+            verticalButton.setTitleColor(UIColor.black, for: UIControl.State())
+            horizontalButton.setTitleColor(UIColor.black, for: UIControl.State())
         }else {
-            verticalButton.setTitleColor(UIColor.white, for: UIControlState())
-            horizontalButton.setTitleColor(UIColor.white, for: UIControlState())
+            verticalButton.setTitleColor(UIColor.white, for: UIControl.State())
+            horizontalButton.setTitleColor(UIColor.white, for: UIControl.State())
         }
         
         verticalButton.backgroundColor = color1
