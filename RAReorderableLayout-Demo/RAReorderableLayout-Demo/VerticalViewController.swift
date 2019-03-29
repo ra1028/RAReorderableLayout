@@ -37,7 +37,7 @@ class VerticalViewController: UIViewController, RAReorderableLayoutDelegate, RAR
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        collectionView.contentInset = UIEdgeInsetsMake(topLayoutGuide.length, 0, 0, 0)
+        collectionView.contentInset = UIEdgeInsets(top: topLayoutGuide.length, left: 0, bottom: 0, right: 0)
     }
     
     // RAReorderableLayout delegate datasource
@@ -66,7 +66,7 @@ class VerticalViewController: UIViewController, RAReorderableLayoutDelegate, RAR
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 0, 2.0, 0)
+        return UIEdgeInsets(top: 0, left: 0, bottom: 2.0, right: 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -100,6 +100,12 @@ class VerticalViewController: UIViewController, RAReorderableLayoutDelegate, RAR
     }
     
     func collectionView(_ collectionView: UICollectionView, at atIndexPath: IndexPath, didMoveTo toIndexPath: IndexPath) {
+        print("==========atIndexPath=======")
+        print(atIndexPath)
+        print("==========atIndexPath=======")
+        print("==========toIndexPath=======")
+        print(toIndexPath)
+        print("==========toIndexPath=======")
         var photo: UIImage
         if (atIndexPath as NSIndexPath).section == 0 {
             photo = imagesForSection0.remove(at: (atIndexPath as NSIndexPath).item)
@@ -115,7 +121,7 @@ class VerticalViewController: UIViewController, RAReorderableLayoutDelegate, RAR
     }
     
     func scrollTrigerEdgeInsetsInCollectionView(_ collectionView: UICollectionView) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(100.0, 100.0, 100.0, 100.0)
+        return UIEdgeInsets(top: 100.0, left: 100.0, bottom: 100.0, right: 100.0)
     }
     
     func collectionView(_ collectionView: UICollectionView, reorderingItemAlphaInSection section: Int) -> CGFloat {
@@ -127,7 +133,7 @@ class VerticalViewController: UIViewController, RAReorderableLayoutDelegate, RAR
     }
     
     func scrollTrigerPaddingInCollectionView(_ collectionView: UICollectionView) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(collectionView.contentInset.top, 0, collectionView.contentInset.bottom, 0)
+        return UIEdgeInsets(top: collectionView.contentInset.top, left: 0, bottom: collectionView.contentInset.bottom, right: 0)
     }
 }
 
@@ -156,7 +162,7 @@ class RACollectionViewCell: UICollectionViewCell {
     private func configure() {
         imageView = UIImageView()
         imageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        imageView.contentMode = UIViewContentMode.scaleAspectFill
+        imageView.contentMode = UIView.ContentMode.scaleAspectFill
         addSubview(imageView)
         
         hilightedCover = UIView()
